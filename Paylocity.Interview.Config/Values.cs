@@ -10,6 +10,11 @@ namespace Paylocity.Interview.Config
         static Values()
         {
             URL = ConfigurationManager.AppSettings["URL"];
+
+            if (bool.TryParse(ConfigurationManager.AppSettings["EnableOptimizations"], out bool isOptimizationsEnabled))
+            {
+                EnableOptimizations = isOptimizationsEnabled;
+            }
         }
 
         /// <summary>
@@ -17,5 +22,11 @@ namespace Paylocity.Interview.Config
         /// EX. http://localhost/Paylocity-Interview/
         /// </summary>
         public static string URL { get; private set; }
+
+        /// <summary>
+        /// Whether or not CSS/JS optimizations enabled
+        /// When TRUE, CSS and JS files will be minified and bundled together
+        /// </summary>
+        public static bool EnableOptimizations { get; private set; }
     }
 }

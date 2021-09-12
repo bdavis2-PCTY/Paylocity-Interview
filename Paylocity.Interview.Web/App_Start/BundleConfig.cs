@@ -1,40 +1,34 @@
-﻿using System.Web.Optimization;
+﻿using System.Collections.Generic;
+using System.Web.Optimization;
 
-namespace Paylocity.Interview
+namespace Paylocity.Interview.Web
 {
     public class BundleConfig
     {
+        public static Dictionary<string, string> BundleDictionary = new Dictionary<string, string>();
+
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            #region Libraries
+            BundleTable.EnableOptimizations = Config.Values.EnableOptimizations;
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            #region Commons/Fundamentals
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            // Libraries
+            bundles.Add(new ScriptBundle("~/bundles/libraries").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/less_{version}.js",
+                        "~/Scripts/semantic.min.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            bundles.Add(new CustomStyleBundle("~/bundles/libraryStyles",
+                "~/Content/semantic.min.css",
+                "~/Content/Site.less"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
-            #endregion Libraries
-
-            #region Base Implementations
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-
+            // Webservices
             bundles.Add(new ScriptBundle("~/bundles/webservices").Include(
-                    "~/Webservice/*.js"));
+                   "~/Webservice/*.js"));
 
-            #endregion Base Implementations
+            #endregion Commons/Fundamentals
         }
     }
 }
