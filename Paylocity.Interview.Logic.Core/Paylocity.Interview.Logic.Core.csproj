@@ -68,14 +68,14 @@
   <ItemGroup>
     <Compile Include="DB\Employee.cs" />
     <Compile Include="DB\Mappings\EmployeeMap.cs" />
+    <Compile Include="DTO\Employee.cs" />
+    <Compile Include="EmployeeAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Paylocity.Interview.ORM\Paylocity.Interview.ORM.csproj">
       <Project>{9bc14a8f-3376-439c-84eb-5349e4c85b7d}</Project>

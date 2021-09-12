@@ -7,16 +7,16 @@ namespace Paylocity.Interview.Logic.Core.DB
     /// </summary>
     internal class Employee
     {
-        public int Id { get; internal set; }
-        public Guid Guid { get; internal set; }
-        public string FirstName { get; internal set; }
-        public string LastName { get; internal set; }
-        public string Email { get; internal set; }
-        public string SSN { get; internal set; }
-        public Guid PrimaryAddressGuid { get; internal set; }
-        public DateTime CreatedDateTime { get; internal set; }
-        public DateTime StartDate { get; internal set; }
-        public DateTime? EndDate { get; internal set; }
+        public virtual int Id { get; protected internal set; }
+        public virtual Guid Guid { get; protected internal set; }
+        public virtual string FirstName { get; protected internal set; }
+        public virtual string LastName { get; protected internal set; }
+        public virtual string Email { get; protected internal set; }
+        public virtual string SSN { get; protected internal set; }
+        public virtual Guid PrimaryAddressGuid { get; protected internal set; }
+        public virtual DateTime CreatedDateTime { get; protected internal set; }
+        public virtual DateTime StartDate { get; protected internal set; }
+        public virtual DateTime? EndDate { get; protected internal set; }
 
         protected Employee()
         {

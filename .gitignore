@@ -368,4 +368,6 @@ FodyWeavers.xsd
 **/*.map
 
 #Webservices
+Paylocity.Interview.Web/Scripts/Helpers/*.js
+Paylocity.Interview.Web/Scripts/Interfaces/*.js
 Paylocity.Interview.Web/Webservice/*.js
