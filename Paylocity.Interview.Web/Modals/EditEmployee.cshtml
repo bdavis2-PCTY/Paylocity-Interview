@@ -2,24 +2,29 @@
 
 <div class="ui modal" id="modal-EditEmployee">
     <div class="header">
-        <h1>Manage Employee</h1>
+        <p>Manage Employee</p>
     </div>
 
     <div class="content">
         <form class="ui form">
-            @* Name/Email *@
-            <h4 class="ui dividing header">Details</h4>
-            <div class="required field">
-                <div class="two fields">
-                    <div class="required field">
-                        <input type="text" name="firstName" placeholder="First Name">
-                    </div>
-                    <div class="required field">
-                        <input type="text" name="lastName" placeholder="Last Name">
-                    </div>
-                </div>
+
+            <div class="ui error message"></div>
+
+            <div>
+                @* Name/Email *@
+                <h4 class="ui dividing header">Details</h4>
                 <div class="required field">
-                    <input type="email" name="email" placeholder="Email Address">
+                    <div class="two fields">
+                        <div class="required field">
+                            <input type="text" name="firstName" placeholder="First Name">
+                        </div>
+                        <div class="required field">
+                            <input type="text" name="lastName" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="required field">
+                        <input type="email" name="email" placeholder="Email Address">
+                    </div>
                 </div>
             </div>
             @* Address *@
@@ -31,6 +36,16 @@
                     </div>
                     <div class="four wide field">
                         <input type="text" name="address2" placeholder="Apt #">
+                    </div>
+                </div>
+            </div>
+            <div class="required field">
+                <div class="two fields">
+                    <div class="required field">
+                        <input type="text" name="city" placeholder="City">
+                    </div>
+                    <div class="required field">
+                        <input type="email" name="postalCode" placeholder="Postal Code">
                     </div>
                 </div>
             </div>
@@ -55,12 +70,17 @@
                 </div>
             </div>
 
-            @* Dependencies *@
-            <h4 class="ui dividing header">Dependencies</h4>
+            @* Dependents *@
+            <h4 class="ui dividing header">Dependents</h4>
+            <table id="uiDepdendentsList" class="ui compact table"></table>
+
+            @* Benefits Summary *@
+            <h4 class="ui dividing header">Benefits Summary</h4>
+            <em>No Depedents Listed</em>
         </form>
     </div>
 
     <div class="actions">
-        @Html.ModalSaveCloseButtons();
+        @Html.ModalSaveCloseButtons()
     </div>
 </div>

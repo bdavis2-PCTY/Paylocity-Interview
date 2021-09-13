@@ -121,3 +121,7 @@ div.dataTables_wrapper div.dataTables_scrollFoot table.dataTable {
     border-top-left-radius: 0;
     border-top: none;
 }
+
+.dataTables_wrapper .dataTables_filter input {
+    background-color: white;
+}

@@ -31,7 +31,8 @@ namespace Paylocity.Interview.Web
 
             // Commons
             bundles.Add(new ScriptBundle("~/bundles/commonScripts").Include(
-                "~/Scripts/Helpers/*.js"
+                "~/Scripts/Helpers/*.js",
+                "~/Scripts/Controls/*.js"
             ));
 
             // Webservices

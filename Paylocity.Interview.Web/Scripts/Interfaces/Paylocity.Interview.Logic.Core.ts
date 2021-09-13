@@ -2,12 +2,30 @@
  * Maps C# DTO objects to typescript interfaces from the Core assembly
  */
 namespace Paylocity.Interview.Web.Interfaces.Core {
+    // Paylocity.Interview.Logic.Core.DTO.Employee
+    export interface IEmployee {
+        Guid: string;
+        FirstName: string;
+        LastName: string;
+        Email: string;
+        SSN: string;
+        Address: IAddress;
+        Dependents: IDependent[];
+    }
+
     // Paylocity.Interview.Logic.Core.DTO.EmployeeListItem
     export interface IEmployeeListItem {
         Guid: string;
         FirstName: string;
         LastName: string;
         Email: string;
+    }
+
+    // Paylocity.Interview.Logic.Core.DTO.Dependent
+    export interface IDependent {
+        Guid: string;
+        FirstName: string;
+        LastName: string;
     }
 
     // Paylocity.Interview.Logic.Core.DTO.Address

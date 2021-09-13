@@ -71,6 +71,7 @@
     <Compile Include="DB\Mappings\AddressMap.cs" />
     <Compile Include="DB\Mappings\EmployeeMap.cs" />
     <Compile Include="DTO\Address.cs" />
+    <Compile Include="DTO\Employee.cs" />
     <Compile Include="DTO\EmployeeListItem.cs" />
     <Compile Include="BaseAPI.cs" />
     <Compile Include="EmployeeAPI.cs" />

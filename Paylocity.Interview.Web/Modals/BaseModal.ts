@@ -41,6 +41,7 @@
                 dataType: 'html'
             };
 
+            Scripts.Controls.Spinner.increase();
             return $.ajax(ajaxSettings).then(modalHtml => {
                 this._$modal = $(modalHtml).modal({
                     closable: false
@@ -50,7 +51,8 @@
                 this._$modal.modal('refresh');
             })
                 .then(() => this.initModal())
-                .fail(error => console.error("Failed to load from " + this._modalUrl, error));
+                .fail(error => console.error("Failed to load from " + this._modalUrl, error))
+                .always(() => Scripts.Controls.Spinner.decrease());
         }
 
         protected showModal(): void {

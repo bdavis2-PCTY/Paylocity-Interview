@@ -11,6 +11,14 @@
         public getEmployeeListAsync(): JQueryPromise<Interfaces.Core.IEmployeeListItem[]> {
             return super.postAsync('GetEmployeeList');
         }
+
+        public getEmployeeAsync(pEmployeeGuid: string): JQueryPromise<Interfaces.Core.IEmployee> {
+            const params = {
+                pEmployeeGuid: pEmployeeGuid
+            };
+
+            return super.postAsync('GetEmployee', params);
+        }
     }
 
     export const Employee = new EmployeeWebservice();

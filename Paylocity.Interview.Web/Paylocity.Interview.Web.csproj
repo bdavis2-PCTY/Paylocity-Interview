@@ -250,6 +250,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Controls\Spinner.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\Form.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\Utility.ts" />
     <TypeScriptCompile Include="Scripts\Home.ts" />

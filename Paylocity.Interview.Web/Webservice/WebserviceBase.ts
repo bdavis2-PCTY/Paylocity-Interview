@@ -28,13 +28,16 @@
                 ajaxSettings.data = JSON.stringify(params);
             }
 
+            Scripts.Controls.Spinner.increase();
             const ajaxPromise = $.ajax(ajaxSettings).then(response => {
                 try {
                     return JSON.parse(response.d);
                 } catch {
                     return response.d;
                 }
-            }).fail(reply => console.error("AJAX call failed!", reply));
+            })
+                .fail(reply => console.error("AJAX call failed!", reply))
+                .always(() => Scripts.Controls.Spinner.decrease());
 
             return ajaxPromise;
         }

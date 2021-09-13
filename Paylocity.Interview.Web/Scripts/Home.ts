@@ -6,7 +6,6 @@
             // Initialize the Employee List
             this.$uiEmployeeList = $("#uiEmployeeList").DataTable({
                 searching: true,
-
                 columns: [
                     {
                         // View Button
@@ -37,6 +36,10 @@
                 }
             });
 
+            // Wire Add Employee button
+            $("#uiAddEmployeeBtn").click(() => Modals.EditEmployee.show(null, () => this.reloadEmployees()));
+
+            // Initial load of employees list
             this.reloadEmployees();
         }
 
@@ -53,10 +56,9 @@
          * @param rowData       Data of the row
          */
         private formatViewColumn(td: HTMLTableCellElement, rowData: Interfaces.Core.IEmployeeListItem) {
-            const $viewBtn = $("<i class='link search plus icon'></i>").click(() => {
-                console.log('viewing ' + rowData.Guid);
-                Paylocity.Interview.Web.Modals.EditEmployee.show();
-            });
+            // Add View Employee button and write to EditEmployee modal
+            const $viewBtn = $("<div class='ui small compact icon button'><i class='link search plus icon'></i></div>")
+                .click(() => Paylocity.Interview.Web.Modals.EditEmployee.show(rowData.Guid, () => this.reloadEmployees()));
 
             $(td).html('').append($viewBtn);
         }
