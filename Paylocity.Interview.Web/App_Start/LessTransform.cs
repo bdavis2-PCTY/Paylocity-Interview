@@ -3,6 +3,7 @@
 namespace Paylocity.Interview.Web
 {
     /// <summary>
+    /// Used to transform LESS into CSS upon client request
     /// https://docs.microsoft.com/en-us/aspnet/mvc/overview/performance/bundling-and-minification
     /// </summary>
     public class LessTransform : IBundleTransform

@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Paylocity.Interview.Logic.Core
@@ -6,25 +7,22 @@ namespace Paylocity.Interview.Logic.Core
     /// <summary>
     /// API for interacting with employees
     /// </summary>
-    public class EmployeeAPI
+    public class EmployeeAPI : BaseAPI
     {
-        private readonly ISession _NHSession;
-
         public EmployeeAPI(ISession pNHSession)
-        {
-            _NHSession = pNHSession;
-        }
+            : base(pNHSession) { }
 
         /// <summary>
         /// Gets all the users that have been entered
+        /// Used for getting a high-level overview of the employees for the employee list
         /// </summary>
         /// <returns></returns>
-        public object GetEmployees()
+        public List<DTO.EmployeeListItem> GetEmployeeList()
         {
-            var Result = (from e in _NHSession.Query<DB.Employee>()
-                          select new DTO.Employee(e)).ToList();
+            List<DTO.EmployeeListItem> Employees = (from e in NHSession.Query<DB.Employee>()
+                                                    select new DTO.EmployeeListItem(e)).ToList();
 
-            return Result;
+            return Employees;
         }
     }
 }

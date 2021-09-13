@@ -371,3 +371,6 @@ FodyWeavers.xsd
 Paylocity.Interview.Web/Scripts/Helpers/*.js
 Paylocity.Interview.Web/Scripts/Interfaces/*.js
 Paylocity.Interview.Web/Webservice/*.js
+
+#Pages
+Paylocity.Interview.Web/Scripts/*.js

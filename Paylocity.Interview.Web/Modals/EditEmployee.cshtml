@@ -1,0 +1,66 @@
+﻿@using Paylocity.Interview.Web.Extensions;
+
+<div class="ui modal" id="modal-EditEmployee">
+    <div class="header">
+        <h1>Manage Employee</h1>
+    </div>
+
+    <div class="content">
+        <form class="ui form">
+            @* Name/Email *@
+            <h4 class="ui dividing header">Details</h4>
+            <div class="required field">
+                <div class="two fields">
+                    <div class="required field">
+                        <input type="text" name="firstName" placeholder="First Name">
+                    </div>
+                    <div class="required field">
+                        <input type="text" name="lastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="required field">
+                    <input type="email" name="email" placeholder="Email Address">
+                </div>
+            </div>
+            @* Address *@
+            <h4 class="ui dividing header">Address</h4>
+            <div class="required field">
+                <div class="fields">
+                    <div class="required twelve wide field">
+                        <input type="text" name="address1" placeholder="Street Address">
+                    </div>
+                    <div class="four wide field">
+                        <input type="text" name="address2" placeholder="Apt #">
+                    </div>
+                </div>
+            </div>
+            <div class="required two fields">
+                <div class="required field">
+                    <div class="ui fluid search selection dropdown">
+                        <input type="hidden" name="state">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select State</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui fluid search selection dropdown">
+                        <input type="hidden" name="country">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select Country</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Dependencies *@
+            <h4 class="ui dividing header">Dependencies</h4>
+        </form>
+    </div>
+
+    <div class="actions">
+        @Html.ModalSaveCloseButtons();
+    </div>
+</div>

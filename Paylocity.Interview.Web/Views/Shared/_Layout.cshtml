@@ -32,10 +32,13 @@
 
     @* Footer *@
     <footer>
-        <p>&copy; @DateTime.Now.Year - Braydon Davis</p>
+        <div class="ui container">
+            <p class="header item">&copy; @DateTime.Now.Year Braydon Davis</p>
+        </div>
     </footer>
 
     @Scripts.Render("~/bundles/libraryScripts")
+    @Scripts.Render("~/bundles/commonScripts")
     @Scripts.Render("~/bundles/webserviceScripts")
     @RenderSection("scripts", required: false)
 </body>

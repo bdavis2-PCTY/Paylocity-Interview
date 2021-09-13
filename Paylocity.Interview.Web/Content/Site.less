@@ -1,9 +1,38 @@
-﻿
-.logo { 
+﻿.logo {
     margin-right: 1em !important;
 }
 
-footer { 
+.ui.main.container {
+    padding: 2em 0;
+    margin-top: 3em; // Prevent the fixed header from overlaying
+}
+
+footer {
     display: block;
-    background-color: #333;
+    background-color: rgb(27, 28, 29);
+    color: #fff;
+    font-weight: bold;
+    padding: 1em;
+    text-align: center;
+}
+
+
+
+.dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui.modal,
+.ui.active.modal {
+    margin: 0 auto !important;
+    top: auto !important;
+    left: auto !important;
+    transform-origin: center !important;
+    transition: all ease .5s;
+}
+
+.dimmed.dimmable > .ui.modals.dimmer.visible {
+    display: flex !important;
 }

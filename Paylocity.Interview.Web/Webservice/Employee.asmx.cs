@@ -18,11 +18,11 @@ namespace Paylocity.Interview.Web.Webservice
     {
         [WebMethod(true)]
         [ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json)]
-        public string GetEmployees()
+        public string GetEmployeeList()
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                var Employees = new EmployeeAPI(NHFactory.Session).GetEmployees();
+                var Employees = new EmployeeAPI(NHFactory.Session).GetEmployeeList();
                 return JsonConvert.SerializeObject(Employees);
             }
         }

@@ -56,6 +56,12 @@
     <Reference Include="dotless.Core, Version=1.6.6.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <HintPath>..\packages\dotless.Core.1.6.6\lib\net47\dotless.Core.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlBuilders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlBuilders.2.0.5\lib\net45\HtmlBuilders.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -165,7 +171,9 @@
     <Compile Include="App_Start\LessTransform.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ModalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,15 +184,35 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Fonts\brand-icons.svg" />
+    <Content Include="Content\Fonts\icons.svg" />
+    <Content Include="Content\Fonts\outline-icons.svg" />
+    <Content Include="Content\Images\flags.png" />
     <Content Include="Content\Images\logo.png" />
-    <Content Include="Content\semantic.min.css" />
+    <Content Include="Content\Libraries\jquery.dataTables\dataTables.semanticui.css" />
+    <Content Include="Content\Libraries\jquery.dataTables\dataTables.semanticui.js" />
+    <Content Include="Content\Libraries\jquery.dataTables\jquery.dataTables.min.css" />
+    <Content Include="Content\Libraries\jquery.dataTables\jquery.dataTables.min.js" />
+    <Content Include="Content\Libraries\jquery\jquery-3.6.0.min.js" />
+    <Content Include="Content\Libraries\semanticUI\semantic.css" />
+    <Content Include="Content\Libraries\semanticUI\semantic.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\semantic.min.js" />
     <Content Include="Webservice\Employee.asmx" />
     <Content Include="Content\Site.less" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Content\Fonts\brand-icons.eot" />
+    <Content Include="Content\Fonts\brand-icons.ttf" />
+    <Content Include="Content\Fonts\brand-icons.woff" />
+    <Content Include="Content\Fonts\brand-icons.woff2" />
+    <Content Include="Content\Fonts\icons.eot" />
+    <Content Include="Content\Fonts\icons.otf" />
+    <Content Include="Content\Fonts\icons.ttf" />
+    <Content Include="Content\Fonts\icons.woff" />
+    <Content Include="Content\Fonts\icons.woff2" />
+    <Content Include="Content\Fonts\outline-icons.eot" />
+    <Content Include="Content\Fonts\outline-icons.ttf" />
+    <Content Include="Content\Fonts\outline-icons.woff" />
+    <Content Include="Content\Fonts\outline-icons.woff2" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -196,18 +224,16 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Modals\Web.config" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Modals\EditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paylocity.Interview.Config\Paylocity.Interview.Config.csproj">
@@ -224,8 +250,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Helpers\Form.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\Utility.ts" />
+    <TypeScriptCompile Include="Scripts\Home.ts" />
+    <TypeScriptCompile Include="Scripts\Interfaces\Paylocity.Interview.Logic.Core.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Modals\EditEmployee.ts" />
+    <TypeScriptCompile Include="Modals\BaseModal.ts" />
     <TypeScriptCompile Include="Webservice\Employee.ts" />
     <TypeScriptCompile Include="Webservice\WebserviceBase.ts" />
   </ItemGroup>

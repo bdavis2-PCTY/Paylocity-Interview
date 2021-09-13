@@ -64,5 +64,6 @@
     <Build Include="Core\Tables\Employee.sql" />
     <Build Include="Security\Core.sql" />
     <Build Include="Core\Tables\Address.sql" />
+    <Build Include="Core\Tables\Depedent.sql" />
   </ItemGroup>
 </Project>
