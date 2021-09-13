@@ -40,43 +40,50 @@
                 </div>
             </div>
             <div class="required field">
-                <div class="two fields">
+                <div class="four fields">
                     <div class="required field">
                         <input type="text" name="city" placeholder="City">
                     </div>
                     <div class="required field">
                         <input type="email" name="postalCode" placeholder="Postal Code">
                     </div>
-                </div>
-            </div>
-            <div class="required two fields">
-                <div class="required field">
-                    <div class="ui fluid search selection dropdown">
-                        <input type="hidden" name="state">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Select State</div>
-                        <div class="menu">
+                    <div class="required field">
+                        <div class="ui fluid search selection dropdown">
+                            <input type="hidden" name="state">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select State</div>
+                            <div class="menu">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="required field">
-                    <div class="ui fluid search selection dropdown">
-                        <input type="hidden" name="country">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Select Country</div>
-                        <div class="menu">
+                    <div class="required field">
+                        <div class="ui fluid search selection dropdown">
+                            <input type="hidden" name="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Country</div>
+                            <div class="menu">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            @* Dependents *@
-            <h4 class="ui dividing header">Dependents</h4>
-            <table id="uiDepdendentsList" class="ui compact table"></table>
-
-            @* Benefits Summary *@
-            <h4 class="ui dividing header">Benefits Summary</h4>
-            <em>No Depedents Listed</em>
+            <div class="ui two column grid">
+                <div class="column">
+                    @* Dependents *@
+                    <h4 class="ui dividing header">Dependents</h4>
+                    <div id="uiAddDependent" class="ui small green left labeled icon button">
+                        <i class="plus icon"></i>
+                        Add Dependent
+                    </div>
+                    <table id="uiDepdendentsList" class="ui compact striped selectable unstackable table"></table>
+                </div>
+                <div class="column">
+                    @* Benefits Summary *@
+                    <h4 class="ui dividing header">Benefits Summary</h4>
+                    <em>No Benefits</em>
+                </div>
+            </div>
         </form>
     </div>
 

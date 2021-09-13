@@ -38,5 +38,14 @@ namespace Paylocity.Interview.Web.Webservice
                 return JsonConvert.SerializeObject(Employee);
             }
         }
+
+        [WebMethod(true)]
+        public void GetEmployeeBenefits(Guid pEmployeeGuid)
+        {
+            using (NHibernateFactory NHFactory = new NHibernateFactory())
+            {
+                new EmployeeAPI(NHFactory.Session).GetEmployeeBenefits(pEmployeeGuid);
+            }
+        }
     }
 }

@@ -16,11 +16,11 @@ namespace Paylocity.Interview.Logic.Core.DTO
         public string SSN { get; set; }
         public Address Address { get; set; }
 
-        public List<object> Dependents { get; set; }
+        public List<DTO.Dependent> Dependents { get; set; }
 
         public Employee() { }
 
-        internal Employee(DB.Employee pEmployee, DTO.Address pAddress, List<object> pDepdendents)
+        internal Employee(DB.Employee pEmployee, DTO.Address pAddress, List<DTO.Dependent> pDepdendents)
         {
             // pEmployee is not allowed to be null
             if (pEmployee == null)

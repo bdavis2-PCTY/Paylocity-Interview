@@ -19,6 +19,14 @@
 
             return super.postAsync('GetEmployee', params);
         }
+
+        public getEmployeeBenefitsAsync(pEmployeeGuid: string): JQueryPromise<void> {
+            const params = {
+                pEmployeeGuid: pEmployeeGuid
+            };
+
+            return super.postAsync('GetEmployeeBenefits', params);
+        }
     }
 
     export const Employee = new EmployeeWebservice();

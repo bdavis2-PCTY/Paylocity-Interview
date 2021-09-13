@@ -1,0 +1,25 @@
+﻿@model List<Paylocity.Interview.Logic.Core.DTO.BenefitCharge>
+
+@{
+    foreach (var Charge in Model)
+    {
+        <p>
+            Charge: @Charge.ChargeReason <br />
+            Base Cost: $@Charge.BaseCost.ToString("N0") <br />
+            Actual Cost: $@Charge.Cost.ToString("N0") <br />
+
+            @if (Charge.Discounts.Count > 0)
+            {
+                <text>Discounts:</text>
+                <ul>
+                    @{
+                        foreach (var Discount in Charge.Discounts)
+                        {
+                            <li>@(Discount.DiscountPercentage * 100)% @Discount.Reason</li>
+                        }
+                    }
+                </ul>
+            }
+        </p>
+    }
+}

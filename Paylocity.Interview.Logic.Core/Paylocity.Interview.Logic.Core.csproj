@@ -67,11 +67,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB\Address.cs" />
+    <Compile Include="DB\Dependent.cs" />
     <Compile Include="DB\Employee.cs" />
     <Compile Include="DB\Mappings\AddressMap.cs" />
+    <Compile Include="DB\Mappings\DependentMap.cs" />
     <Compile Include="DB\Mappings\EmployeeMap.cs" />
     <Compile Include="DTO\Address.cs" />
+    <Compile Include="DTO\BenefitCharge.cs" />
+    <Compile Include="DTO\Dependent.cs" />
     <Compile Include="DTO\Employee.cs" />
+    <Compile Include="DTO\BenefitDiscount.cs" />
     <Compile Include="DTO\EmployeeListItem.cs" />
     <Compile Include="BaseAPI.cs" />
     <Compile Include="EmployeeAPI.cs" />
@@ -82,6 +87,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Paylocity.Interview.Exceptions\Paylocity.Interview.Exceptions.csproj">
+      <Project>{b42e945f-9e15-4302-9634-8a3b1185183b}</Project>
+      <Name>Paylocity.Interview.Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Paylocity.Interview.ORM\Paylocity.Interview.ORM.csproj">
       <Project>{9bc14a8f-3376-439c-84eb-5349e4c85b7d}</Project>
       <Name>Paylocity.Interview.ORM</Name>

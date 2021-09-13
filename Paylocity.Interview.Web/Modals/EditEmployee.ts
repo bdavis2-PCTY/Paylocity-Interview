@@ -133,14 +133,18 @@
         }
     }
 
+    /**
+     * Manges the Dependent section of the Manage Employee modal
+     */
     class DependentManager {
-
         private _dependents: Interfaces.Core.IDependent[];
-        private readonly $uiDepedentList: $;
+        private readonly $uiDependentList: $;
 
         public constructor($pModal: $) {
             this._dependents = [];
-            this.$uiDepedentList = $("#uiDepdendentsList", $pModal).DataTable({
+
+            // Initialize the dependent list
+            this.$uiDependentList = $("#uiDepdendentsList", $pModal).DataTable({
                 columns: [
                     {
                         title: "First Name",
@@ -157,20 +161,36 @@
                     processing: "Processing"
                 }
             });
+
+            $("#uiAddDependent", $pModal).click(() => {
+                // TODO: Add method to add dependents
+            });
         }
 
+        /**
+         * Resets the Dependents section
+         */
         public reset(): void {
             this._dependents = [];
-            this.$uiDepedentList.clear().draw();
+            this.$uiDependentList.clear().draw();
         }
 
+        /**
+         * Returns all the employee's dependents (existing and new)
+         * Used for when the form is saving
+         */
         public getDependents(): Interfaces.Core.IDependent[] {
             return this._dependents;
         }
 
+        /**
+         * Sets the current employee dependents
+         * Used for when the form is loading
+         * @param pDependents
+         */
         public setDependents(pDependents: Interfaces.Core.IDependent[]): void {
             this._dependents = pDependents;
-            this.$uiDepedentList.clear().rows.add(this._dependents).draw();
+            this.$uiDependentList.clear().rows.add(this._dependents).draw();
         }
     }
 

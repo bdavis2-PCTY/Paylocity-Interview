@@ -3,7 +3,7 @@
 namespace Paylocity.Interview.Logic.Core.DB
 {
     /// <summary>
-    /// Represents an Employee entry to 
+    /// Represents an Employee entry in the database 
     /// </summary>
     internal class Employee
     {

@@ -9,7 +9,7 @@
     [CreatedDateTime]     DATETIME         NOT NULL,
     [StartDate]           DATE             NOT NULL,
     [EndDate]             DATE             NULL,
-    CONSTRAINT [EmployeePK] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+    CONSTRAINT [EmployeePK] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 GO
 

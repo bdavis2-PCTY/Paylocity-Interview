@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using Paylocity.Interview.Logic.Core.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +48,6 @@ namespace Paylocity.Interview.Logic.Core
             try
             {
                 // TODO: Add security so only verified user can access
-
-                DTO.Employee Employee = null;
-
                 var EmployeeDetails = (from e in NHSession.Query<DB.Employee>()
                                        join a in NHSession.Query<DB.Address>() on e.PrimaryAddressGuid equals a.Guid into employeeAddress
                                        from a in employeeAddress.DefaultIfEmpty()
@@ -60,22 +58,64 @@ namespace Paylocity.Interview.Logic.Core
                                            Address = a
                                        }).FirstOrDefault();
 
-                if (EmployeeDetails != null)
+                if (EmployeeDetails == null)
                 {
-                    // Determine address
-                    DTO.Address Address = null;
-                    if (EmployeeDetails.Address != null)
-                    {
-                        Address = new DTO.Address(EmployeeDetails.Address);
-                    }
-
-                    // Determine Dependents
-                    List<object> Dependents = new List<object>();
-
-                    Employee = new DTO.Employee(EmployeeDetails.Employee, Address, Dependents);
+                    throw new Exceptions.Core.EmployeeDoesNotExistException();
                 }
 
-                return Employee;
+                // Determine address
+                DTO.Address Address = null;
+                if (EmployeeDetails.Address != null)
+                {
+                    Address = new DTO.Address(EmployeeDetails.Address);
+                }
+
+                // Query dependents
+                List<DTO.Dependent> Dependents = (from d in NHSession.Query<DB.Dependent>()
+                                                  where d.EmployeeGuid == pEmployeeGuid
+                                                  select new DTO.Dependent(d)).ToList();
+
+                return new DTO.Employee(EmployeeDetails.Employee, Address, Dependents);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the benefit details of an employee
+        /// </summary>
+        /// <param name="pEmployeeGuid"></param>
+        /// <returns></returns>
+        public List<BenefitCharge> GetEmployeeBenefits(Guid pEmployeeGuid)
+        {
+            try
+            {
+                DTO.Employee Employee = GetEmployee(pEmployeeGuid);
+                List<BenefitCharge> Charges = new List<BenefitCharge>();
+
+                // Add base employee charge
+                var EmployeeCharge = new BenefitCharge(1000, $"Monthly employee benefits for {Employee.FirstName} {Employee.LastName}", new List<BenefitDiscount>());
+                if (Employee.FirstName.ToLower().StartsWith("a"))
+                {
+                    EmployeeCharge.Discounts.Add(new BenefitDiscount(0.1, $"Employee name '{Employee.FirstName}' starts with A"));
+                }
+                Charges.Add(EmployeeCharge);
+
+                // Add charges for dependents
+                foreach (var Dependent in Employee.Dependents)
+                {
+                    var DependentCharge = new BenefitCharge(500, $"Monthly dependent {Dependent.FirstName} {Dependent.LastName}", new List<BenefitDiscount>());
+                    if (Dependent.FirstName.ToLower().StartsWith("a"))
+                    {
+                        DependentCharge.Discounts.Add(new BenefitDiscount(0.1, $"Dependent name '{Dependent.FirstName}' starts with A"));
+                    }
+                    Charges.Add(DependentCharge);
+                }
+
+                return Charges;
             }
             catch (Exception ex)
             {

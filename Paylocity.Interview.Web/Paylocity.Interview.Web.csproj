@@ -234,11 +234,16 @@
     <Content Include="Modals\Web.config" />
     <None Include="packages.config" />
     <Content Include="Modals\EditEmployee.cshtml" />
+    <Content Include="Views\Home\_BenefitSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paylocity.Interview.Config\Paylocity.Interview.Config.csproj">
       <Project>{b4321c80-9825-4dad-8940-5e5c8092c2b3}</Project>
       <Name>Paylocity.Interview.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Paylocity.Interview.Exceptions\Paylocity.Interview.Exceptions.csproj">
+      <Project>{b42e945f-9e15-4302-9634-8a3b1185183b}</Project>
+      <Name>Paylocity.Interview.Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Paylocity.Interview.Logic.Core\Paylocity.Interview.Logic.Core.csproj">
       <Project>{50eee9b5-7058-4f13-94f9-d1b3f785edd2}</Project>

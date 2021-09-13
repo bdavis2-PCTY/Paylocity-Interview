@@ -8,7 +8,7 @@
     [PostalCode]          NVARCHAR (250)   NOT NULL,
     [CountryCode]         NVARCHAR (2)     NOT NULL,
     [EmployeeGuid]        UNIQUEIDENTIFIER NOT NULL,
-    CONSTRAINT [AddressPK] PRIMARY KEY NONCLUSTERED ([Id] ASC)
+    CONSTRAINT [AddressPK] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 GO
 
@@ -17,6 +17,6 @@ CREATE UNIQUE NONCLUSTERED INDEX [AddressU1]
 GO
 
 
-CREATE UNIQUE NONCLUSTERED INDEX [AddressU2]
+CREATE NONCLUSTERED INDEX [AddressU2]
     ON [Core].[Address]([EmployeeGuid])
 GO
