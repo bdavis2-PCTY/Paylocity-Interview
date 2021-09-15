@@ -8,6 +8,9 @@ namespace Paylocity.Interview.Web.Extensions
     /// </summary>
     public static class HtmlHelperExtensions
     {
+        /**
+         * Creates a Save and Cancel button for a SemanticUI modal 
+         */
         public static MvcHtmlString ModalSaveCloseButtons(this HtmlHelper pHtmlHelper, string pSaveButtonText = "Save", string pSaveButtonIcon = "save", string pCancelButtonText = "Cancel", string pCancelButtonIcon = "remove")
         {
             var Save = GetActionButton(pSaveButtonText, pSaveButtonIcon, "green approve");
@@ -15,6 +18,9 @@ namespace Paylocity.Interview.Web.Extensions
             return MvcHtmlString.Create($"{Save}{Cancel}");
         }
 
+        /**
+         * Builds a base SemanticUI button 
+         */
         private static HtmlTag GetActionButton(string pButtonText, string pIconName, params string[] pAdditionalClasses)
         {
             // Create button tag

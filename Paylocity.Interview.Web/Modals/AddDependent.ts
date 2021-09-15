@@ -79,6 +79,7 @@
 
             this.hideModal();
 
+            // Run callback
             if (this._onSaveCallback) {
                 const formValues: IDependentFormValues = this.$form.form('get values');
                 this._onSaveCallback(formValues);

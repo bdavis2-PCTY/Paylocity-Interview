@@ -33,7 +33,8 @@ namespace Paylocity.Interview.Web
             // Commons
             bundles.Add(new ScriptBundle("~/bundles/commonScripts").Include(
                 "~/Scripts/Helpers/*.js",
-                "~/Scripts/Controls/*.js"
+                "~/Scripts/Controls/*.js",
+                "~/Modals/BaseModal.js"
             ));
 
             // Webservices
@@ -51,9 +52,8 @@ namespace Paylocity.Interview.Web
 
             #region Specific Pages
 
-            bundles.Add(new ScriptBundle("~/bundles/pageHome").Include(
+            bundles.Add(new ScriptBundle("~/bundles/pageHomeScripts").Include(
                 "~/Scripts/Home.js",
-                "~/Modals/BaseModal.js",
                 "~/Modals/EditEmployee.js",
                 "~/Modals/AddDependent.js"
             ));

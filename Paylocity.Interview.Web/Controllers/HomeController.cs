@@ -11,6 +11,11 @@ namespace Paylocity.Interview.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Used to get the Benefits Summary section of the EditEmployee Modal
+        /// </summary>
+        /// <param name="pEmployee"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult BenefitSummary(Logic.Core.DTO.Employee pEmployee)
         {

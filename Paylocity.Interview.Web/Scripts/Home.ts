@@ -1,4 +1,8 @@
 ﻿namespace Paylocity.Interview.Web.Scripts {
+
+    /**
+     * Manager for the Home screen
+     */
     class Home {
         private $uiEmployeeList: JQuery;
 
@@ -64,5 +68,6 @@
         }
     }
 
+    // Init the Home screen
     $(document).ready(() => new Home());
 }

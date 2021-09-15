@@ -10,8 +10,6 @@
         private readonly _baseUrl: string = null;
 
         public constructor(pWebserviceName: string) {
-            // Build the base URL for the webservice
-            // EX. http://localhost/Paylocity-Interview/Webservice/Employee.asmx
             this._baseUrl = `${Scripts.Helpers.Utility.getSiteUrl()}/Webservice/${pWebserviceName}`;
         }
 

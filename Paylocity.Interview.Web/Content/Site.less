@@ -1,4 +1,5 @@
 ﻿body {
+    // Core layout
     background-color: rgba(0,0,0,0.05);
     display: flex;
     min-height: 100vh;
@@ -21,6 +22,16 @@
         font-weight: bold;
         padding: 1em;
         text-align: center;
+    }
+    // Text modifiers
+    .ui.text {
+        &.bold {
+            font-weight: bold;
+        }
+
+        &.red {
+            color: #e24c4c;
+        }
     }
     // Semantic UI fix -
     // Reposition modals to be centered
@@ -50,14 +61,4 @@
 html, body {
     // Fix SemanticUI scroll problem
     height: unset;
-}
-
-.ui.text {
-    &.bold {
-        font-weight: bold;
-    }
-
-    &.red {
-        color: #e24c4c;
-    }
 }

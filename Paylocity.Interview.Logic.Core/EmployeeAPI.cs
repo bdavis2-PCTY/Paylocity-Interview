@@ -229,7 +229,7 @@ namespace Paylocity.Interview.Logic.Core
                                   where e.Guid == pEmployee.Guid
                                   select e).FirstOrDefault();
 
-                // Update core employee fields
+                // Update core employee properties
                 DBEmployee.FirstName = pEmployee.FirstName;
                 DBEmployee.LastName = pEmployee.LastName;
                 DBEmployee.Email = pEmployee.Email;

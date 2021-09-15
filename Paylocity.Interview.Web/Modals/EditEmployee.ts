@@ -1,4 +1,9 @@
 ﻿namespace Paylocity.Interview.Web.Modals {
+
+    /**
+     * Represents the SemanticUI form values for the EditEmployee form
+     * Used to help enforce type safety 
+     */
     interface IEmployeeFormValues {
         firstName: string;
         lastName: string;
@@ -34,7 +39,7 @@
             this.$form = $('.ui.form', this.$modal).form({
                 on: 'change',
                 delay: false, // We use our own timeout in onFormChange() for better control
-                onSuccess: () => this.saveEmployee(),
+                onSuccess: () => this.saveEmployeeAsync(),
 
                 // Use onValid/onInvalid to refresh benefit summary
                 onValid: () => this.onFormChange(),
@@ -94,7 +99,7 @@
                 .then(() => {
                     // Load employee data if editing an existing user
                     if (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid()) {
-                        return this.loadEmployeeData();
+                        return this.loadExistingEmployeeAsync();
                     } else {
                         // Reload the Benefit Summary to display the default data
                         return this._benefitManager.reload(this.getEmployee());
@@ -127,7 +132,10 @@
             return this.$form.form('get values');
         }
 
-        private loadEmployeeData(): JQueryPromise<void> {
+        /**
+         * Loads the details for an existing employee into the form
+         */
+        private loadExistingEmployeeAsync(): JQueryPromise<void> {
             return Webservice.Employee.getEmployeeAsync(this._employeeGuid).then(employee => {
                 const formValues: IEmployeeFormValues = {
                     firstName: employee.FirstName,
@@ -144,13 +152,16 @@
                     country: employee.Address?.CountryCode || '',
                 };
 
+                // Load form, dependents, and benefits summary
                 this.$form.form('set values', formValues);
                 this._dependentManager.setDependents(employee.Dependents);
-
                 return this._benefitManager.reload(employee);
             });
         }
 
+        /**
+         * Gets an Employee object with the properties set to the current form values
+         */
         private getEmployee(): Interfaces.Core.IEmployee {
             const dependents = this._dependentManager.getDependents();
             const employeeForm = this.getFormValues();
@@ -178,10 +189,13 @@
             return ret;
         }
 
-        private saveEmployee(): JQueryPromise<void> {
+        /**
+         * Saves or updates the employee based if the form is valid
+         */
+        private saveEmployeeAsync(): JQueryPromise<void> {
             // Verify the form is valid
             if (!this.$form.form('is valid')) {
-                return $.Deferred<void>().reject();
+                return $.Deferred<void>().rejectWith("Invalid form input");
             }
 
             const employee = this.getEmployee();
@@ -347,6 +361,9 @@
         }
     }
 
+    /**
+     * Responsible for managing the Benefits Summary section of the modal
+     */
     class BenefitsManager {
         private $uiBenefitsWrapper: $;
 
@@ -354,6 +371,10 @@
             this.$uiBenefitsWrapper = $("#uiBenefitsWrapper", $pModal);
         }
 
+        /**
+         * Reloads the Benefits Summary based on current form values
+         * @param pEmployee
+         */
         public reload(pEmployee: Interfaces.Core.IEmployee): JQueryPromise<void> {
             return Paylocity.Interview.Web.Controllers.Home.benefitSummaryAsync(pEmployee).then(html => {
                 this.$uiBenefitsWrapper.html(html);

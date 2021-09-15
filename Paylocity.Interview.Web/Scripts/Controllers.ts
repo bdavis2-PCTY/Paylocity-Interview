@@ -9,6 +9,11 @@ namespace Paylocity.Interview.Web.Controllers {
             this._baseUrl = `${Scripts.Helpers.Utility.getSiteUrl()}/${pControllerName}`;
         }
 
+        /**
+         * Submits a POST request to a controller using AJAX and returns the HTML
+         * @param pViewName
+         * @param pParams
+         */
         public postHtmlAsync(pViewName: string, pParams?: object): JQueryPromise<string> {
             const ajaxSettings: JQueryAjaxSettings = {
                 url: `${this._baseUrl}/${pViewName}`,

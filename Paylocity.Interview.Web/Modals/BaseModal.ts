@@ -27,6 +27,10 @@
             this._modalUrl = `${Scripts.Helpers.Utility.getSiteUrl()}/Modal/${pModalname}`;
         }
 
+        /**
+         * Uses AJAX to load the modal's HTML and append it to the DOM
+         * Must be called before the modal can be initialized
+         */
         protected loadModalAsync(): JQueryPromise<void> {
             // Check if the modal's HTML has already been loaded
             // If so, just continue execution
@@ -55,6 +59,10 @@
                 .always(() => Scripts.Controls.Spinner.decrease());
         }
 
+        /**
+         * Shows the modal
+         * Note: Modal must be initialized with .loadModalAsync() first
+         */
         protected showModal(): void {
             // Ensure the modal's HTML has been loaded
             if (!this.$modal) {
@@ -64,6 +72,10 @@
             this.$modal.modal('show');
         }
 
+        /**
+         * Hides the modal
+         * Note: Modal must be initialized with .loadModalAsync() first
+         */
         protected hideModal(): void {
             // Ensure the modal's HTML has been loaded
             if (!this.$modal) {
