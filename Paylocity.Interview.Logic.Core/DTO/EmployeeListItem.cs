@@ -8,10 +8,18 @@ namespace Paylocity.Interview.Logic.Core.DTO
     /// </summary>
     public class EmployeeListItem
     {
-        public Guid Guid { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
+        public Guid Guid { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Email { get; private set; }
+
+        public EmployeeListItem(Guid pGuid, string pFirstName, string pLastName, string pEmail)
+        {
+            Guid = pGuid;
+            FirstName = pFirstName;
+            LastName = pLastName;
+            Email = pEmail;
+        }
 
         internal EmployeeListItem(DB.Employee pEmployee)
         {

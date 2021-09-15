@@ -18,6 +18,7 @@ namespace Paylocity.Interview.Web
             bundles.Add(new ScriptBundle("~/bundles/libraryScripts").Include(
                 "~/Content/Libraries/jquery/jquery-3.6.0.min.js",
                 "~/Content/Libraries/semanticUI/semantic.js",
+                "~/Content/Libraries/semanticUI/semanticui.validators.js",
                 "~/Content/Libraries/jquery.dataTables/jquery.dataTables.min.js",
                 "~/Content/Libraries/jquery.dataTables/dataTables.semanticui.js"
             ));
@@ -41,6 +42,11 @@ namespace Paylocity.Interview.Web
                 "~/Webservice/*.js"
             ));
 
+            // Controllers
+            bundles.Add(new ScriptBundle("~/bundles/controllerScripts").Include(
+                "~/Scripts/Controllers.js"
+            ));
+
             #endregion Commons/Fundamentals
 
             #region Specific Pages
@@ -48,7 +54,8 @@ namespace Paylocity.Interview.Web
             bundles.Add(new ScriptBundle("~/bundles/pageHome").Include(
                 "~/Scripts/Home.js",
                 "~/Modals/BaseModal.js",
-                "~/Modals/EditEmployee.js"
+                "~/Modals/EditEmployee.js",
+                "~/Modals/AddDependent.js"
             ));
 
             #endregion Specific Pages

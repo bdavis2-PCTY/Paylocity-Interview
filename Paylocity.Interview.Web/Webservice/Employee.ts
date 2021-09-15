@@ -27,6 +27,22 @@
 
             return super.postAsync('GetEmployeeBenefits', params);
         }
+
+        public updateEmployeeAsync(pEmployee: Interfaces.Core.IEmployee): JQueryPromise<void> {
+            const params = {
+                pEmployee: pEmployee
+            };
+
+            return this.postAsync('UpdateEmployee', params);
+        }
+
+        public createEmployeeAsync(pEmployee: Interfaces.Core.IEmployee): JQueryPromise<string> {
+            const params = {
+                pEmployee: pEmployee
+            };
+
+            return this.postAsync('CreateEmployee', params);
+        }
     }
 
     export const Employee = new EmployeeWebservice();

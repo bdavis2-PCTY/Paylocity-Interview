@@ -228,10 +228,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Modals\Web.config" />
+    <Content Include="Modals\AddDependent.cshtml" />
     <None Include="packages.config" />
     <Content Include="Modals\EditEmployee.cshtml" />
     <Content Include="Views\Home\_BenefitSummary.cshtml" />
@@ -255,6 +255,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Content\Libraries\semanticUI\semanticui.validators.ts" />
+    <TypeScriptCompile Include="Modals\AddDependent.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers.ts" />
     <TypeScriptCompile Include="Scripts\Controls\Spinner.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\Form.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\Utility.ts" />

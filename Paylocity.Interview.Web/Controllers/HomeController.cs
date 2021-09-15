@@ -1,6 +1,5 @@
 ﻿using Paylocity.Interview.Logic.Core;
 using Paylocity.Interview.ORM;
-using System;
 using System.Web.Mvc;
 
 namespace Paylocity.Interview.Controllers
@@ -12,12 +11,12 @@ namespace Paylocity.Interview.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult BenefitSummary(Guid pEmployeeGuid)
+        [HttpPost]
+        public ActionResult BenefitSummary(Logic.Core.DTO.Employee pEmployee)
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                var EmployeeBenefitSummary = new EmployeeAPI(NHFactory.Session).GetEmployeeBenefits(pEmployeeGuid);
+                var EmployeeBenefitSummary = new EmployeeAPI(NHFactory.Session).GetEmployeeBenefits(pEmployee);
                 return PartialView("_BenefitSummary", EmployeeBenefitSummary);
             }
         }

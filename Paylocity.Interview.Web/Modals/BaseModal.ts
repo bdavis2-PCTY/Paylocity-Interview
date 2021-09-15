@@ -44,13 +44,13 @@
             Scripts.Controls.Spinner.increase();
             return $.ajax(ajaxSettings).then(modalHtml => {
                 this._$modal = $(modalHtml).modal({
-                    closable: false
+                    closable: false,
+                    allowMultiple: true
                 });
 
                 $('.ui.modals.dimmer').append(this._$modal);
                 this._$modal.modal('refresh');
-            })
-                .then(() => this.initModal())
+            }).then(() => this.initModal())
                 .fail(error => console.error("Failed to load from " + this._modalUrl, error))
                 .always(() => Scripts.Controls.Spinner.decrease());
         }
@@ -62,6 +62,15 @@
             }
 
             this.$modal.modal('show');
+        }
+
+        protected hideModal(): void {
+            // Ensure the modal's HTML has been loaded
+            if (!this.$modal) {
+                throw "The modal needs to be loaded before hiding it";
+            }
+
+            this.$modal.modal('hide');
         }
 
         protected abstract initModal(): JQueryPromise<any> | void;

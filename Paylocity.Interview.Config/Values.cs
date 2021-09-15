@@ -3,7 +3,7 @@
 namespace Paylocity.Interview.Config
 {
     /// <summary>
-    /// Allows access to application configuration values
+    /// Allows access to application-level configuration values
     /// </summary>
     public static class Values
     {

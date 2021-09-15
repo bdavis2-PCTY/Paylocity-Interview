@@ -1,25 +1,87 @@
-﻿@model List<Paylocity.Interview.Logic.Core.DTO.BenefitCharge>
+﻿@model Paylocity.Interview.Logic.Core.DTO.EmployeeBenefitSummary
 
 @{
-    foreach (var Charge in Model)
+    if (Model != null)
     {
-        <p>
-            Charge: @Charge.ChargeReason <br />
-            Base Cost: $@Charge.BaseCost.ToString("N0") <br />
-            Actual Cost: $@Charge.Cost.ToString("N0") <br />
+        if (string.IsNullOrWhiteSpace(Model.Employee.FirstName)
+                && string.IsNullOrWhiteSpace(Model.Employee.LastName))
+        {
+            @* Require at least a name to show calculations *@
+            <em>Not enough info to calculate</em>
+        }
+        else
+        {
 
-            @if (Charge.Discounts.Count > 0)
+            <div class="ui two column grid" style="margin-bottom: 0.25em;">
+                <div class="column">
+                    <strong>Gross Annual Salary:</strong> $@Model.Employee.GrossAnnualSalary.ToString("N0")
+                </div>
+                <div class="column">
+                    <strong>Paycheck Amount:</strong> $@Model.Employee.GrossPaycheckAmount.ToString("N0")
+                </div>
+            </div>
+
+            @* Deductions *@
+            <strong>Deductions</strong>
+            if (Model.Deductions.Count > 0)
             {
-                <text>Discounts:</text>
                 <ul>
-                    @{
-                        foreach (var Discount in Charge.Discounts)
-                        {
-                            <li>@(Discount.DiscountPercentage * 100)% @Discount.Reason</li>
-                        }
+                    @foreach (var Charge in Model.Deductions)
+                    {
+                        <li>
+                            @* Deduction Reason *@
+                            <span class="ui text">
+                                -$@Charge.NetAnnualCost.ToString("N0"): @Charge.Reason
+                                @if (Charge.Discounts.Count > 0)
+                                {
+                                    <em>(was $@Charge.GrossAnnualCost.ToString("N0"))</em>
+                                }
+                            </span>
+
+                            @* Deduction Discounts *@
+                            @if (Charge.Discounts.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var Discount in Charge.Discounts)
+                                    {
+                                        <li>
+                                            -@(Discount.DiscountPercentage * 100)%:
+                                            @Discount.Reason
+                                            (-$@((Charge.GrossAnnualCost * Discount.DiscountPercentage).ToString("N0")))
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </li>
                     }
                 </ul>
+
+                <div class="ui two column grid">
+                    <div class="column">
+                        <strong>Annual Deductions:</strong> $@Model.NetAnnualDeductions.ToString("N0")
+                    </div>
+                    <div class="column">
+                        <strong>Paycheck Deductions:</strong> $@Model.NetPaycheckDeductions.ToString("N0")
+                    </div>
+                </div>
             }
-        </p>
+            else
+            {
+                <em>No Deductions</em>
+            }
+
+            <div class="ui two column grid">
+                <div class="column">
+                    <strong>Net Annual Salary:</strong> $@Model.NetAnnualSalary.ToString("N0")
+                </div>
+                <div class="column">
+                    <strong>Net Paycheck:</strong> $@Model.NetPaycheck.ToString("N0")
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <em>No Benefits</em>
     }
 }

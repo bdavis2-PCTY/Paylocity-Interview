@@ -15,6 +15,7 @@ namespace Paylocity.Interview.Logic.Core.DB.Mappings
             Map(x => x.State).Column("State").Not.Nullable().Length(250);
             Map(x => x.PostalCode).Column("PostalCode").Not.Nullable().Length(250);
             Map(x => x.CountryCode).Column("CountryCode").Not.Nullable().Length(2);
+            Map(x => x.EmployeeGuid).Column("EmployeeGuid").Not.Nullable();
         }
     }
 }

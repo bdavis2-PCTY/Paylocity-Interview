@@ -19,7 +19,6 @@
         }
 
         private updateDisplay(): void {
-            console.log('spinner count', this._count);
             this.$uiSpinner.toggleClass('active', this._count > 0);
         }
     }

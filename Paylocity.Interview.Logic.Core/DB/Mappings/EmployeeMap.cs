@@ -12,11 +12,9 @@ namespace Paylocity.Interview.Logic.Core.DB.Mappings
             Map(x => x.FirstName).Column("FirstName").Not.Nullable();
             Map(x => x.LastName).Column("LastName").Not.Nullable();
             Map(x => x.Email).Column("Email").Not.Nullable();
-            Map(x => x.SSN).Column("SSN").Not.Nullable();
+            Map(x => x.PhoneNumber).Column("PhoneNumber").Not.Nullable();
             Map(x => x.PrimaryAddressGuid).Column("PrimaryAddressGuid").Not.Nullable();
             Map(x => x.CreatedDateTime).Column("CreatedDateTime").Not.Nullable().Not.Update();
-            Map(x => x.StartDate).Column("StartDate").Not.Nullable();
-            Map(x => x.EndDate).Column("EndDate").Nullable();
         }
     }
 }

@@ -4,11 +4,9 @@
     [FirstName]           NVARCHAR (MAX)   NOT NULL,
     [LastName]            NVARCHAR (MAX)   NOT NULL,
     [Email]               NVARCHAR (MAX)   NOT NULL,
-    [SSN]                 NVARCHAR (10)    NOT NULL,
+    [PhoneNumber]                 NVARCHAR (15)    NOT NULL,
     [PrimaryAddressGuid]  UNIQUEIDENTIFIER NOT NULL,
     [CreatedDateTime]     DATETIME         NOT NULL,
-    [StartDate]           DATE             NOT NULL,
-    [EndDate]             DATE             NULL,
     CONSTRAINT [EmployeePK] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 GO

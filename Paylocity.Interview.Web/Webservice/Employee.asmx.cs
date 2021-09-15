@@ -40,11 +40,21 @@ namespace Paylocity.Interview.Web.Webservice
         }
 
         [WebMethod(true)]
-        public void GetEmployeeBenefits(Guid pEmployeeGuid)
+        public string CreateEmployee(Logic.Core.DTO.Employee pEmployee)
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                new EmployeeAPI(NHFactory.Session).GetEmployeeBenefits(pEmployeeGuid);
+                Guid EmployeeGuid = new EmployeeAPI(NHFactory.Session).CreateEmployee(pEmployee);
+                return JsonConvert.SerializeObject(EmployeeGuid);
+            }
+        }
+
+        [WebMethod(true)]
+        public void UpdateEmployee(Logic.Core.DTO.Employee pEmployee)
+        {
+            using (NHibernateFactory NHFactory = new NHibernateFactory())
+            {
+                new EmployeeAPI(NHFactory.Session).UpdateEmployee(pEmployee);
             }
         }
     }

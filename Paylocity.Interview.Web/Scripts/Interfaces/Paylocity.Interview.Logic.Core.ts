@@ -8,7 +8,7 @@ namespace Paylocity.Interview.Web.Interfaces.Core {
         FirstName: string;
         LastName: string;
         Email: string;
-        SSN: string;
+        PhoneNumber: string;
         Address: IAddress;
         Dependents: IDependent[];
     }

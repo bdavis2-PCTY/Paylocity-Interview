@@ -1,0 +1,26 @@
+﻿@using Paylocity.Interview.Web.Extensions;
+
+<div class="ui mini modal" id="modal-AddDependent">
+    <div class="header">
+        <p>Add Dependent</p>
+    </div>
+
+    <div class="content">
+        <div class="ui form">
+
+            <div class="ui error message"></div>
+
+            @* Name/Email *@
+            <div class="required field">
+                <input type="text" name="firstName" placeholder="First Name">
+            </div>
+            <div class="required field">
+                <input type="text" name="lastName" placeholder="Last Name">
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        @Html.ModalSaveCloseButtons()
+    </div>
+</div>

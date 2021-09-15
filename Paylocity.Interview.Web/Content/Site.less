@@ -36,7 +36,10 @@
         top: auto !important;
         left: auto !important;
         transform-origin: center !important;
-        transition: all ease .5s;
+
+        &:not(.mini) {
+            min-width: 800px;
+        }
     }
 
     .dimmed.dimmable > .ui.modals.dimmer.visible {
@@ -47,4 +50,14 @@
 html, body {
     // Fix SemanticUI scroll problem
     height: unset;
+}
+
+.ui.text {
+    &.bold {
+        font-weight: bold;
+    }
+
+    &.red {
+        color: #e24c4c;
+    }
 }

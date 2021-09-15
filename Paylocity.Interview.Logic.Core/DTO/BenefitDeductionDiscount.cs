@@ -1,18 +1,18 @@
 ﻿namespace Paylocity.Interview.Logic.Core.DTO
 {
-    public class BenefitDiscount
+    public class BenefitDeductionDiscount
     {
         /// <summary>
         /// The percentage of the original total that is taken removed
         /// </summary>
-        public double DiscountPercentage { get; set; }
+        public double DiscountPercentage { get; private set; }
 
         /// <summary>
         /// Reason for the discount
         /// </summary>
-        public string Reason { get; set; }
+        public string Reason { get; private set; }
 
-        public BenefitDiscount(double pDiscountPercentage, string pReason)
+        public BenefitDeductionDiscount(double pDiscountPercentage, string pReason)
         {
             DiscountPercentage = pDiscountPercentage;
             Reason = pReason;

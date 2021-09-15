@@ -13,12 +13,37 @@ namespace Paylocity.Interview.Logic.Core.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string SSN { get; set; }
+        public string PhoneNumber { get; set; }
         public Address Address { get; set; }
+        public List<DTO.Dependent> Dependents { get; set; }  
 
-        public List<DTO.Dependent> Dependents { get; set; }
+        /// <summary>
+        /// Annual salary before deductions
+        /// TODO: Implement at the database level
+        /// </summary>
+        public double GrossAnnualSalary { 
+            get => GrossPaycheckAmount * 26d; // GrossPaycheckAmount/paycheck * 26 paychecks/yr 
+        }
+
+        /// <summary>
+        /// Paycheck amount before deductions
+        /// </summary>
+        public double GrossPaycheckAmount
+        {
+            get => 2000d;
+        }
 
         public Employee() { }
+
+        public Employee(Guid pGuid, string pFirstName, string pLastName, string pEmail, string pPhoneNumber, Address pAddress)
+        {
+            Guid = pGuid;
+            FirstName = pFirstName;
+            LastName = pLastName;
+            Email = pEmail;
+            PhoneNumber = pPhoneNumber;
+            Address = pAddress;
+        }
 
         internal Employee(DB.Employee pEmployee, DTO.Address pAddress, List<DTO.Dependent> pDepdendents)
         {
@@ -32,7 +57,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
             FirstName = pEmployee.FirstName;
             LastName = pEmployee.LastName;
             Email = pEmployee.Email;
-            SSN = pEmployee.SSN;
+            PhoneNumber = pEmployee.PhoneNumber;
             Address = pAddress;
             Dependents = pDepdendents;
         }

@@ -6,7 +6,7 @@
     </div>
 
     <div class="content">
-        <form class="ui form">
+        <div class="ui form">
 
             <div class="ui error message"></div>
 
@@ -23,7 +23,14 @@
                         </div>
                     </div>
                     <div class="required field">
-                        <input type="email" name="email" placeholder="Email Address">
+                        <div class="two fields">
+                            <div class="required field">
+                                <input type="email" name="email" placeholder="Email Address">
+                            </div>
+                            <div class="required field">
+                                <input type="tel" name="phoneNumber" placeholder="Phone Number">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,10 +88,10 @@
                 <div class="column">
                     @* Benefits Summary *@
                     <h4 class="ui dividing header">Benefits Summary</h4>
-                    <em>No Benefits</em>
+                    <div id="uiBenefitsWrapper"></div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 
     <div class="actions">

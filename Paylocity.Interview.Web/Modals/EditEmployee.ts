@@ -3,6 +3,7 @@
         firstName: string;
         lastName: string;
         email: string;
+        phoneNumber: string;
         address1: string;
         address2: string;
         city: string;
@@ -17,7 +18,10 @@
     class EditEmploiyeeModal extends BaseModal {
         private _employeeGuid: string;
         private _onSaveCallback: () => void;
+
         private _dependentManager: DependentManager;
+        private _benefitManager: BenefitsManager;
+        private _benefitRefreshTimout: number;
 
         private $form: $;
 
@@ -28,16 +32,25 @@
         protected initModal(): void {
             // Initialize SemanticUI forms
             this.$form = $('.ui.form', this.$modal).form({
+                on: 'change',
+                delay: false, // We use our own timeout in onFormChange() for better control
+                onSuccess: () => this.saveEmployee(),
+
+                // Use onValid/onInvalid to refresh benefit summary
+                onValid: () => this.onFormChange(),
+                onInvalid: () => this.onFormChange(),
+
                 fields: {
                     firstName: { identifier: 'firstName', rules: [{ type: 'empty', prompt: 'Provide a first name' }] },
                     lastName: { identifier: 'lastName', rules: [{ type: 'empty', prompt: 'Provide a last name' }] },
                     email: { identifier: 'email', rules: [{ type: 'email', prompt: 'Provide a valid email address' }] },
+                    phoneNumber: { identifier: 'phoneNumber', rules: [{ type: 'phone', prompt: 'Provide a valid phone number' }] },
                     address1: { identifier: 'address1', rules: [{ type: 'empty', prompt: 'Provide an address' }] },
                     address2: { identifier: 'address2', rules: [] },
                     city: { identifier: 'city', rules: [{ type: 'empty', prompt: 'Provide a city' }] },
-                    state: { identifier: 'state', rules: [{ type: 'empty', prompt: 'Select a state' }] },
+                    state: { identifier: 'state', rules: [{ type: 'empty', prompt: 'Provide an state' }] },
                     postalCode: { identifier: 'postalCode', rules: [{ type: 'empty', prompt: 'Provide a postal code' }] },
-                    country: { identifier: 'country', rules: [{ type: 'empty', prompt: 'Select a country' }] },
+                    country: { identifier: 'country', rules: [{ type: 'empty', prompt: 'Provide a country' }] },
                 }
             });
 
@@ -49,18 +62,21 @@
             // Prevent modal closing before data is validated/saved
             this.$modal.modal({
                 closable: false,
+                allowMultiple: true,
                 onApprove: () => {
-                    if (this.isFormValid()) {
-                        // Run save callback
-                        if (this._onSaveCallback) {
-                            this._onSaveCallback();
-                        }
-                    }
+                    // Run form validation to run 'onSuccess'
+                    this.$form.form('validate form');
                     return false;
                 }
             });
 
+            this._benefitManager = new BenefitsManager(this.$modal);
+
             this._dependentManager = new DependentManager(this.$modal);
+            this._dependentManager.onDependentsChanged(() => {
+                const employee = this.getEmployee();
+                return this._benefitManager.reload(employee);
+            });
         }
 
         /**
@@ -69,16 +85,19 @@
          * @param pEmployeeGuid     The GUID of the employee to edit. Use NULL for employee creation.
          * @param pOnSaveCallback   The callback function when the employee is saved/updated.
          */
-        public show(pEmployeeGuid: string, pOnSaveCallback: () => void): JQueryPromise<void> {
+        public show(pEmployeeGuid: string, pOnSaveCallback?: () => void): JQueryPromise<void> {
             this.reset();
-            this._employeeGuid = pEmployeeGuid;
+            this._employeeGuid = pEmployeeGuid || Scripts.Helpers.Utility.getEmptyGuid();
             this._onSaveCallback = pOnSaveCallback;
 
             return this.loadModalAsync()
                 .then(() => {
                     // Load employee data if editing an existing user
-                    if (this._employeeGuid) {
+                    if (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid()) {
                         return this.loadEmployeeData();
+                    } else {
+                        // Reload the Benefit Summary to display the default data
+                        return this._benefitManager.reload(this.getEmployee());
                     }
                 })
                 .then(() => this.showModal())
@@ -95,20 +114,17 @@
             if (this.$form) {
                 this.$form.form('clear');
             }
+
+            if (this._dependentManager) {
+                this._dependentManager.reset();
+            }
         }
 
         /**
-         * Validates the form to ensure user input is acceptable
-         * Returns TRUE when the form is valid
-         * Returns FALSE when the form is not valid
+         * Returns the current form values for the employee values
          */
-        private isFormValid(): boolean {
-            this.$form.form('validate form');
-            if (this.$form.form('is valid')) {
-                return true;
-            }
-
-            return false;
+        private getFormValues(): IEmployeeFormValues {
+            return this.$form.form('get values');
         }
 
         private loadEmployeeData(): JQueryPromise<void> {
@@ -117,6 +133,7 @@
                     firstName: employee.FirstName,
                     lastName: employee.LastName,
                     email: employee.Email,
+                    phoneNumber: employee.PhoneNumber,
 
                     // Address can be null if nothing was entered
                     address1: employee.Address?.AddressLine1 || '',
@@ -129,7 +146,84 @@
 
                 this.$form.form('set values', formValues);
                 this._dependentManager.setDependents(employee.Dependents);
+
+                return this._benefitManager.reload(employee);
             });
+        }
+
+        private getEmployee(): Interfaces.Core.IEmployee {
+            const dependents = this._dependentManager.getDependents();
+            const employeeForm = this.getFormValues();
+
+            const address: Interfaces.Core.IAddress = {
+                Guid: this._employeeGuid,
+                AddressLine1: employeeForm.address1,
+                AddressLine2: employeeForm.address2,
+                City: employeeForm.city,
+                State: employeeForm.state,
+                PostalCode: employeeForm.postalCode,
+                CountryCode: employeeForm.country
+            };
+
+            const ret: Interfaces.Core.IEmployee = {
+                Guid: this._employeeGuid,
+                FirstName: employeeForm.firstName,
+                LastName: employeeForm.lastName,
+                Email: employeeForm.email,
+                PhoneNumber: employeeForm.phoneNumber,
+                Address: address,
+                Dependents: dependents
+            };
+
+            return ret;
+        }
+
+        private saveEmployee(): JQueryPromise<void> {
+            // Verify the form is valid
+            if (!this.$form.form('is valid')) {
+                return $.Deferred<void>().reject();
+            }
+
+            const employee = this.getEmployee();
+
+            // Update or save the employee in the DB
+            let savePromise: JQueryPromise<any> = null;
+            if (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid()) {
+                // Editing an existing employee -- Update them
+                savePromise = Webservice.Employee.updateEmployeeAsync(employee);
+            } else {
+                // Creating a new employee -- Create them
+                savePromise = Webservice.Employee.createEmployeeAsync(employee);
+            }
+
+            return savePromise.then(() => {
+                this.hideModal();
+
+                // Run save callback
+                if (this._onSaveCallback) {
+                    this._onSaveCallback();
+                }
+            });
+        }
+
+        /**
+         * Called when the form is changed
+         * Used to refresh the Benefits Summary section
+         */
+        private onFormChange(): void {
+            console.log('changed');
+
+            // Use a timeout to prevent pinging the server on every change
+            if (this._benefitRefreshTimout) {
+                clearTimeout(this._benefitRefreshTimout);
+                this._benefitRefreshTimout = null;
+            }
+
+            // Refresh Benefits Summary section
+            this._benefitRefreshTimout = setTimeout(() => {
+                const employee = this.getEmployee();
+                this._benefitManager.reload(employee);
+            }, 750);
         }
     }
 
@@ -140,8 +234,11 @@
         private _dependents: Interfaces.Core.IDependent[];
         private readonly $uiDependentList: $;
 
+        private readonly _onDependentsChangedCallbacks: (() => void)[];
+
         public constructor($pModal: $) {
             this._dependents = [];
+            this._onDependentsChangedCallbacks = [];
 
             // Initialize the dependent list
             this.$uiDependentList = $("#uiDepdendentsList", $pModal).DataTable({
@@ -153,6 +250,16 @@
                     {
                         title: "Last Name",
                         data: "LastName"
+                    },
+                    {
+                        title: '',
+                        data: 'Guid',
+                        width: '15px',
+                        createdCell: (td, _, rowData: Interfaces.Core.IDependent) => {
+                            const $icon = $('<i class="link red remove icon"></i>');
+                            $icon.click(() => this.removeDependent(rowData.Guid));
+                            $(td).html('').append($icon);
+                        }
                     }
                 ],
 
@@ -162,9 +269,7 @@
                 }
             });
 
-            $("#uiAddDependent", $pModal).click(() => {
-                // TODO: Add method to add dependents
-            });
+            $("#uiAddDependent", $pModal).click(() => Modals.AddDependent.show(dependent => this.addDependent(dependent.firstName, dependent.lastName)));
         }
 
         /**
@@ -173,6 +278,14 @@
         public reset(): void {
             this._dependents = [];
             this.$uiDependentList.clear().draw();
+        }
+
+        /**
+         * Subscribes to when the dependents are changed (added or removed)
+         * @param pOnDependentAddedCallback
+         */
+        public onDependentsChanged(pOnDependentAddedCallback: () => void): void {
+            this._onDependentsChangedCallbacks.push(pOnDependentAddedCallback);
         }
 
         /**
@@ -191,6 +304,60 @@
         public setDependents(pDependents: Interfaces.Core.IDependent[]): void {
             this._dependents = pDependents;
             this.$uiDependentList.clear().rows.add(this._dependents).draw();
+        }
+
+        /**
+         * Adds a new dependent to the UI
+         * @param pFirstName
+         * @param pLastName
+         */
+        private addDependent(pFirstName: string, pLastName: string): void {
+            const dependent: Interfaces.Core.IDependent = {
+                Guid: Scripts.Helpers.Utility.newGuid(),
+                FirstName: pFirstName,
+                LastName: pLastName,
+            };
+
+            this._dependents.push(dependent);
+            this.$uiDependentList.clear().rows.add(this._dependents).draw();
+            this.triggerDependentsChanged();
+        }
+
+        /**
+         * Removes a dependent from the list
+         * @param pDependentGuid
+         */
+        private removeDependent(pDependentGuid: string): void {
+            this._dependents = $.grep(this._dependents, item => item.Guid !== pDependentGuid);
+            this.$uiDependentList.clear().rows.add(this._dependents).draw();
+            this.triggerDependentsChanged();
+        }
+
+        /**
+         * Triggers all the dependent changed callbacks
+         */
+        private triggerDependentsChanged(): void {
+            for (const index in this._onDependentsChangedCallbacks) {
+                try {
+                    this._onDependentsChangedCallbacks[index]();
+                } catch (ex) {
+                    console.error("Callback failed", ex);
+                }
+            }
+        }
+    }
+
+    class BenefitsManager {
+        private $uiBenefitsWrapper: $;
+
+        public constructor($pModal: $) {
+            this.$uiBenefitsWrapper = $("#uiBenefitsWrapper", $pModal);
+        }
+
+        public reload(pEmployee: Interfaces.Core.IEmployee): JQueryPromise<void> {
+            return Paylocity.Interview.Web.Controllers.Home.benefitSummaryAsync(pEmployee).then(html => {
+                this.$uiBenefitsWrapper.html(html);
+            });
         }
     }
 

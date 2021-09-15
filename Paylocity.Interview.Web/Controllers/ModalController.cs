@@ -7,9 +7,14 @@ namespace Paylocity.Interview.Controllers
     /// </summary>
     public class ModalController : Controller
     {
-       public ActionResult EditEmployee()
+        public ActionResult EditEmployee()
         {
             return PartialView("~/Modals/EditEmployee.cshtml");
+        }
+
+        public ActionResult AddDependent()
+        {
+            return PartialView("~/Modals/AddDependent.cshtml");
         }
     }
 }
