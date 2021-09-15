@@ -1,5 +1,6 @@
 ﻿/**
  * Maps C# DTO objects to typescript interfaces from the Core assembly
+ * Maps DTOs for: Paylocity.Interview.Logic.Core.DTO
  */
 namespace Paylocity.Interview.Web.Interfaces.Core {
     // Paylocity.Interview.Logic.Core.DTO.Employee

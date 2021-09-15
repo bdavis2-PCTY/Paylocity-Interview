@@ -71,7 +71,6 @@
          * Validates the form and runs the callback
          */
         private onFormSubmit(): boolean {
-            console.log('on submitting');
 
             if (!this.$form.form('is valid')) {
                 return false;

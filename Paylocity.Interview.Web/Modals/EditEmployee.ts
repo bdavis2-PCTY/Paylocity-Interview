@@ -225,7 +225,6 @@
          * Used to refresh the Benefits Summary section
          */
         private onFormChange(): void {
-            console.log('changed');
 
             // Use a timeout to prevent pinging the server on every change
             if (this._benefitRefreshTimout) {
