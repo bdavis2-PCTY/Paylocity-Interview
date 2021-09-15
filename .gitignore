@@ -367,13 +367,11 @@ FodyWeavers.xsd
 #Custom
 **/*.map
 
-#Webservices
+Paylocity.Interview.Web/Content/Libraries/semanticUI/semanticui.validators.js
+Paylocity.Interview.Web/Scripts/*.js
 Paylocity.Interview.Web/Scripts/Helpers/*.js
 Paylocity.Interview.Web/Scripts/Interfaces/*.js
 Paylocity.Interview.Web/Scripts/Controls/*.js
-Paylocity.Interview.Web/Content/Libraries/semanticUI/semanticui.validators.js
 Paylocity.Interview.Web/Webservice/*.js
 
-#Pages
 Paylocity.Interview.Web/Modals/*.js
-Paylocity.Interview.Web/Scripts/*.js
