@@ -29,5 +29,34 @@
         public static getEmptyGuid(): string {
             return '00000000-0000-0000-0000-000000000000';
         }
+
+        /**
+         * Removes HTML from a string
+         * Replaces tags with codes
+         * @param pString
+         */
+        public static escapeHtml(pString: string): string {
+            if (!pString) {
+                return pString;
+            }
+
+            pString = this.replaceAll(pString, '<', '&lt;');
+            pString = this.replaceAll(pString, '>', '&gt;');
+            return pString;
+        }
+
+        /**
+         * Replaces all instance of a string within a string with another string
+         * @param pString       The original string
+         * @param pReplace      String that needs to be replaced
+         * @param pReplaceWith  What to replace pReplace with
+         */
+        public static replaceAll(pString: string, pReplace: string, pReplaceWith: string): string {
+            if (!pString) {
+                return pString;
+            }
+
+            return pString.split(pReplace).join(pReplaceWith);
+        }
     }
 }

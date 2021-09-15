@@ -1,5 +1,4 @@
 ﻿namespace Paylocity.Interview.Web.Scripts {
-
     /**
      * Manager for the Home screen
      */
@@ -22,15 +21,18 @@
                     },
                     {
                         title: "First Name",
-                        data: "FirstName"
+                        data: "FirstName",
+                        render: data => Helpers.Utility.escapeHtml(data)
                     },
                     {
                         title: "Last Name",
-                        data: "LastName"
+                        data: "LastName",
+                        render: data => Helpers.Utility.escapeHtml(data)
                     },
                     {
                         title: "Email",
-                        data: "Email"
+                        data: "Email",
+                        render: data => Helpers.Utility.escapeHtml(data)
                     }
                 ],
 

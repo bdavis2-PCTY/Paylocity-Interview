@@ -1,8 +1,7 @@
 ﻿namespace Paylocity.Interview.Web.Modals {
-
     /**
      * Represents the SemanticUI form values for the EditEmployee form
-     * Used to help enforce type safety 
+     * Used to help enforce type safety
      */
     interface IEmployeeFormValues {
         firstName: string;
@@ -225,7 +224,6 @@
          * Used to refresh the Benefits Summary section
          */
         private onFormChange(): void {
-
             // Use a timeout to prevent pinging the server on every change
             if (this._benefitRefreshTimout) {
                 clearTimeout(this._benefitRefreshTimout);
@@ -258,18 +256,20 @@
                 columns: [
                     {
                         title: "First Name",
-                        data: "FirstName"
+                        data: "FirstName",
+                        render: data => Scripts.Helpers.Utility.escapeHtml(data)
                     },
                     {
                         title: "Last Name",
-                        data: "LastName"
+                        data: "LastName",
+                        render: data => Scripts.Helpers.Utility.escapeHtml(data)
                     },
                     {
                         title: '',
                         data: 'Guid',
                         width: '15px',
                         createdCell: (td, _, rowData: Interfaces.Core.IDependent) => {
-                            const $icon = $('<i class="link red remove icon"></i>');
+                            const $icon = $('<i class="link red remove icon" title="Remove Dependent"></i>');
                             $icon.click(() => this.removeDependent(rowData.Guid));
                             $(td).html('').append($icon);
                         }

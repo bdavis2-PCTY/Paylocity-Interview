@@ -16,7 +16,7 @@ namespace Paylocity.Interview.Controllers
         /// </summary>
         /// <param name="pEmployee"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult BenefitSummary(Logic.Core.DTO.Employee pEmployee)
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
