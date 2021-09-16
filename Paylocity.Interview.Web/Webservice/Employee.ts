@@ -8,8 +8,12 @@
             super('Employee.asmx');
         }
 
-        public getEmployeeListAsync(): JQueryPromise<Interfaces.Core.IEmployeeListItem[]> {
-            return super.postAsync('GetEmployeeList');
+        public getEmployeeListAsync(pIncludeInactive: boolean): JQueryPromise<Interfaces.Core.IEmployeeListItem[]> {
+            const params = {
+                pIncludeInactive: pIncludeInactive
+            };
+
+            return super.postAsync('GetEmployeeList', params);
         }
 
         public getEmployeeAsync(pEmployeeGuid: string): JQueryPromise<Interfaces.Core.IEmployee> {

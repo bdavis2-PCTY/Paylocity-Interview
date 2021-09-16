@@ -12,13 +12,15 @@ namespace Paylocity.Interview.Logic.Core.DTO
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
+        public bool IsActive { get; private set; }
 
-        public EmployeeListItem(Guid pGuid, string pFirstName, string pLastName, string pEmail)
+        public EmployeeListItem(Guid pGuid, string pFirstName, string pLastName, string pEmail, bool pIsActive)
         {
             Guid = pGuid;
             FirstName = pFirstName;
             LastName = pLastName;
             Email = pEmail;
+            IsActive = pIsActive;
         }
 
         internal EmployeeListItem(DB.Employee pEmployee)
@@ -33,6 +35,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
             FirstName = pEmployee.FirstName;
             LastName = pEmployee.LastName;
             Email = pEmployee.Email;
+            IsActive = pEmployee.IsActive;
         }
     }
 }

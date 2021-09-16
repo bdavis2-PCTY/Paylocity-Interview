@@ -20,15 +20,18 @@ namespace Paylocity.Interview.Logic.Core
         /// Gets all the users that have been entered
         /// Used for getting a high-level overview of the employees for the employee list
         /// </summary>
+        /// <param name="pIncludeInactive">
+        /// When TRUE, inactive employees will also be returned
+        /// </param>
         /// <returns></returns>
-        public List<DTO.EmployeeListItem> GetEmployeeList()
+        public List<DTO.EmployeeListItem> GetEmployeeList(bool pIncludeInactive)
         {
             try
             {
                 // TODO: Add security so only verified user can access
 
                 List<DTO.EmployeeListItem> Employees = (from e in NHSession.Query<DB.Employee>()
-                                                        where e.IsActive
+                                                        where e.IsActive || pIncludeInactive
                                                         select new DTO.EmployeeListItem(e)).ToList();
 
                 return Employees;

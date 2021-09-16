@@ -19,11 +19,11 @@ namespace Paylocity.Interview.Web.Webservice
     {
         [WebMethod(true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string GetEmployeeList()
+        public string GetEmployeeList(bool pIncludeInactive)
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                var Employees = new EmployeeAPI(NHFactory.Session).GetEmployeeList();
+                var Employees = new EmployeeAPI(NHFactory.Session).GetEmployeeList(pIncludeInactive);
                 return JsonConvert.SerializeObject(Employees);
             }
         }
