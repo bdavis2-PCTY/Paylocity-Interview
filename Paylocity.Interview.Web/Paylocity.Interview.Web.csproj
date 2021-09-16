@@ -191,6 +191,11 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Libraries\jquery.dataTables\dataTables.semanticui.css" />
     <Content Include="Content\Libraries\jquery.dataTables\dataTables.semanticui.js" />
+    <Content Include="Content\Libraries\jquery.dataTables\images\sort_asc.png" />
+    <Content Include="Content\Libraries\jquery.dataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\Libraries\jquery.dataTables\images\sort_both.png" />
+    <Content Include="Content\Libraries\jquery.dataTables\images\sort_desc.png" />
+    <Content Include="Content\Libraries\jquery.dataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\Libraries\jquery.dataTables\jquery.dataTables.min.css" />
     <Content Include="Content\Libraries\jquery.dataTables\jquery.dataTables.min.js" />
     <Content Include="Content\Libraries\jquery\jquery-3.6.0.min.js" />

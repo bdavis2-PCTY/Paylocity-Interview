@@ -97,13 +97,13 @@ namespace Paylocity.Interview.Logic.Core
         /// </summary>
         /// <param name="pEmployeeGuid"></param>
         /// <returns></returns>
-        public EmployeeBenefitSummary GetEmployeeBenefits(Guid pEmployeeGuid)
+        public BenefitSummary GetEmployeeBenefitSummary(Guid pEmployeeGuid)
         {
             try
             {
                 // TODO: Add security so only verified user can access
                 DTO.Employee Employee = GetEmployee(pEmployeeGuid);
-                return GetEmployeeBenefits(Employee);
+                return GetEmployeeBenefitSummary(Employee);
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace Paylocity.Interview.Logic.Core
         /// <param name="pEmployee"></param>
         /// <param name="pDependents"></param>
         /// <returns></returns>
-        public EmployeeBenefitSummary GetEmployeeBenefits(DTO.Employee pEmployee)
+        public BenefitSummary GetEmployeeBenefitSummary(DTO.Employee pEmployee)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Paylocity.Interview.Logic.Core
                     }
                 }
 
-                return new EmployeeBenefitSummary(pEmployee, Charges);
+                return new BenefitSummary(pEmployee, Charges);
             }
             catch (Exception ex)
             {

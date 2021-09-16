@@ -80,7 +80,7 @@
     <Compile Include="DTO\Dependent.cs" />
     <Compile Include="DTO\Employee.cs" />
     <Compile Include="DTO\BenefitDeductionDiscount.cs" />
-    <Compile Include="DTO\EmployeeBenefitSummary.cs" />
+    <Compile Include="DTO\BenefitSummary.cs" />
     <Compile Include="DTO\EmployeeListItem.cs" />
     <Compile Include="BaseAPI.cs" />
     <Compile Include="EmployeeAPI.cs" />

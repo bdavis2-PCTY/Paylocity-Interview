@@ -65,9 +65,11 @@
                 },
 
                 initComplete: () => {
+                    // Move the Show Inactive Employees checkbox to the toolbar
                     $('.row .eight.wide.column', this.$uiEmployeeList).first().html('').append(this.$uiToggleInactiveEmployeesChk);
                 },
 
+                // Setup default ordering (FirstName ASC, LastName ASC, Email ASC)
                 order: [[1, 'asc'], [2, 'asc'], [3, 'asc']]
             });
 
@@ -94,6 +96,7 @@
             const isIncludeInactive = this.isShowingInactive();
 
             // Update IsActive column visibility
+            // 4 = IsActive column
             const column = this.$uiEmployeeList.column(4);
             column.visible(isIncludeInactive);
 

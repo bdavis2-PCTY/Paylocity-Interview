@@ -3,9 +3,19 @@ using System.Linq;
 
 namespace Paylocity.Interview.Logic.Core.DTO
 {
-    public class EmployeeBenefitSummary
+    /// <summary>
+    /// Used to provide a summary of an employee's benefits
+    /// </summary>
+    public class BenefitSummary
     {
+        /// <summary>
+        /// Employee the benefits are associated with 
+        /// </summary>
         public DTO.Employee Employee { get; private set; }
+
+        /// <summary>
+        /// Deductions included with the benefits
+        /// </summary>
         public List<DTO.BenefitDeduction> Deductions { get; private set; }
 
         /// <summary>
@@ -40,7 +50,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
             get => (AnnualNetSalary / 26d);         // 26 paycheck/year
         }
 
-        public EmployeeBenefitSummary(DTO.Employee pEmployee, List<DTO.BenefitDeduction> pCharges)
+        public BenefitSummary(DTO.Employee pEmployee, List<DTO.BenefitDeduction> pCharges)
         {
             Employee = pEmployee;
             Deductions = pCharges;

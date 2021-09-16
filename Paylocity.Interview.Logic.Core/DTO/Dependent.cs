@@ -3,7 +3,7 @@
 namespace Paylocity.Interview.Logic.Core.DTO
 {
     /// <summary>
-    /// Provides all details about a dependent
+    /// Provides all details about an employee's dependent
     /// Javascript: Paylocity.Interview.Web.Scripts.Interfaces.Core.IDependent
     /// </summary>
     public class Dependent

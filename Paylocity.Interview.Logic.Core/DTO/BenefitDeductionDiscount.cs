@@ -1,5 +1,8 @@
 ﻿namespace Paylocity.Interview.Logic.Core.DTO
 {
+    /// <summary>
+    /// Represents a discount of a benefit charge
+    /// </summary>
     public class BenefitDeductionDiscount
     {
         /// <summary>

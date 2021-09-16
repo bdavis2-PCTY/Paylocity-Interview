@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Paylocity.Interview.Logic.Core.DTO
 {
+    /// <summary>
+    /// Represents a deduction part of a benefit
+    /// </summary>
     public class BenefitDeduction
     {
         /// <summary>

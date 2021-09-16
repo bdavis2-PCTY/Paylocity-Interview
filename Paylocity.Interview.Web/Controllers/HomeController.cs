@@ -21,7 +21,7 @@ namespace Paylocity.Interview.Web.Controllers
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                var EmployeeBenefitSummary = new EmployeeAPI(NHFactory.Session).GetEmployeeBenefits(pEmployee);
+                var EmployeeBenefitSummary = new EmployeeAPI(NHFactory.Session).GetEmployeeBenefitSummary(pEmployee);
                 return PartialView("_BenefitSummary", EmployeeBenefitSummary);
             }
         }

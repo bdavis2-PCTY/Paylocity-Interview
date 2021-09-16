@@ -13,6 +13,12 @@
             this._baseUrl = `${Scripts.Helpers.Utility.getSiteUrl()}/Webservice/${pWebserviceName}`;
         }
 
+        /**
+         * Submits a POST request to a webservice
+         * Returns the JSON response as a promise
+         * @param pMethodName
+         * @param params
+         */
         protected postAsync(pMethodName: string, params?: object): JQueryPromise<any> {
             const ajaxSettings: JQueryAjaxSettings = {
                 url: `${this._baseUrl}/${pMethodName}`,
@@ -28,6 +34,7 @@
 
             Scripts.Controls.Spinner.increase();
             const ajaxPromise = $.ajax(ajaxSettings).then(response => {
+                // Parse and return response
                 try {
                     return JSON.parse(response.d);
                 } catch {
