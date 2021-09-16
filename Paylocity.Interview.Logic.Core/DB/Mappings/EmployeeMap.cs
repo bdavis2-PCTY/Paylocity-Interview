@@ -15,6 +15,7 @@ namespace Paylocity.Interview.Logic.Core.DB.Mappings
             Map(x => x.PhoneNumber).Column("PhoneNumber").Not.Nullable();
             Map(x => x.PrimaryAddressGuid).Column("PrimaryAddressGuid").Not.Nullable();
             Map(x => x.CreatedDateTime).Column("CreatedDateTime").Not.Nullable().Not.Update();
+            Map(x => x.IsActive).Column("IsActive").Not.Nullable();
         }
     }
 }

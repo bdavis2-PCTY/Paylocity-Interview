@@ -27,13 +27,35 @@
         private _benefitManager: BenefitsManager;
         private _benefitRefreshTimout: number;
 
+        private $uiDeleteEmployeeBtn: $;
+
         private $form: $;
 
         public constructor() {
             super("EditEmployee");
         }
 
+        // @override BaseModal.initModal()
         protected initModal(): void {
+            // Prevent modal closing before data is validated/saved
+            this.$modal.modal({
+                closable: false,
+                allowMultiple: true,
+                onApprove: () => {
+                    // Run form validation to run 'onSuccess'
+                    this.$form.form('validate form');
+                    return false;
+                }
+            });
+
+            // Init supporting modules
+            this._benefitManager = new BenefitsManager(this.$modal);
+            this._dependentManager = new DependentManager(this.$modal);
+            this._dependentManager.onDependentsChanged(() => {
+                const employee = this.getEmployee();
+                return this._benefitManager.reload(employee);
+            });
+
             // Initialize SemanticUI forms
             this.$form = $('.ui.form', this.$modal).form({
                 on: 'change',
@@ -58,29 +80,28 @@
                 }
             });
 
+            // Delete employee
+            this.$uiDeleteEmployeeBtn = $("#uiDeleteEmployeeBtn", this.$modal).click(() => {
+                // Prompt confirmation
+                const confirmed = confirm("Are you sure you want to delete this employee?");
+                if (!confirmed) {
+                    return;
+                }
+
+                Webservice.Employee.deleteEmployeeAsync(this._employeeGuid).then(() => {
+                    this.hideModal();
+
+                    // Run save callback
+                    if (this._onSaveCallback) {
+                        this._onSaveCallback();
+                    }
+                });
+            });
+
             // Load states/countries into address dropdowns
             Scripts.Helpers.Form.setDropdownStates($(this.$form.form('get field', 'state')).parent());
             Scripts.Helpers.Form.setDropdownCountries($(this.$form.form('get field', 'country')).parent());
             $('.ui.dropdown', this.$modal).dropdown();
-
-            // Prevent modal closing before data is validated/saved
-            this.$modal.modal({
-                closable: false,
-                allowMultiple: true,
-                onApprove: () => {
-                    // Run form validation to run 'onSuccess'
-                    this.$form.form('validate form');
-                    return false;
-                }
-            });
-
-            this._benefitManager = new BenefitsManager(this.$modal);
-
-            this._dependentManager = new DependentManager(this.$modal);
-            this._dependentManager.onDependentsChanged(() => {
-                const employee = this.getEmployee();
-                return this._benefitManager.reload(employee);
-            });
         }
 
         /**
@@ -96,16 +117,18 @@
 
             return this.loadModalAsync()
                 .then(() => {
+                    const isExistingEmployee = (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid());
+                    this.$uiDeleteEmployeeBtn.toggle(isExistingEmployee);
+
                     // Load employee data if editing an existing user
-                    if (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid()) {
+                    if (isExistingEmployee) {
                         return this.loadExistingEmployeeAsync();
                     } else {
                         // Reload the Benefit Summary to display the default data
                         return this._benefitManager.reload(this.getEmployee());
                     }
                 })
-                .then(() => this.showModal())
-                .fail(console.log);
+                .then(() => this.showModal());
         }
 
         /**
@@ -166,7 +189,7 @@
             const employeeForm = this.getFormValues();
 
             const address: Interfaces.Core.IAddress = {
-                Guid: this._employeeGuid,
+                Guid: Scripts.Helpers.Utility.newGuid(),
                 AddressLine1: employeeForm.address1,
                 AddressLine2: employeeForm.address2,
                 City: employeeForm.city,
@@ -182,7 +205,8 @@
                 Email: employeeForm.email,
                 PhoneNumber: employeeForm.phoneNumber,
                 Address: address,
-                Dependents: dependents
+                Dependents: dependents,
+                IsActive: true
             };
 
             return ret;
@@ -192,6 +216,7 @@
          * Saves or updates the employee based if the form is valid
          */
         private saveEmployeeAsync(): JQueryPromise<void> {
+
             // Verify the form is valid
             if (!this.$form.form('is valid')) {
                 return $.Deferred<void>().rejectWith("Invalid form input");
@@ -243,8 +268,8 @@
      */
     class DependentManager {
         private _dependents: Interfaces.Core.IDependent[];
-        private readonly $uiDependentList: $;
 
+        private readonly $uiDependentList: $;
         private readonly _onDependentsChangedCallbacks: (() => void)[];
 
         public constructor($pModal: $) {
@@ -375,7 +400,7 @@
          * @param pEmployee
          */
         public reload(pEmployee: Interfaces.Core.IEmployee): JQueryPromise<void> {
-            return Paylocity.Interview.Web.Controllers.Home.benefitSummaryAsync(pEmployee).then(html => {
+            return Scripts.Controllers.Home.benefitSummaryAsync(pEmployee).then(html => {
                 this.$uiBenefitsWrapper.html(html);
             });
         }

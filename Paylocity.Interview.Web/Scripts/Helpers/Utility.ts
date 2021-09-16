@@ -15,6 +15,7 @@
 
         /**
          * Generates and returns a new guid value (Guid.NewGuid())
+         * https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
          */
         public static newGuid(): string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -47,6 +48,7 @@
 
         /**
          * Replaces all instance of a string within a string with another string
+         * String.prototype.replaceAll is not supported by all browsers which makes this necessary
          * @param pString       The original string
          * @param pReplace      String that needs to be replaced
          * @param pReplaceWith  What to replace pReplace with

@@ -28,6 +28,7 @@ namespace Paylocity.Interview.Logic.Core
                 // TODO: Add security so only verified user can access
 
                 List<DTO.EmployeeListItem> Employees = (from e in NHSession.Query<DB.Employee>()
+                                                        where e.IsActive
                                                         select new DTO.EmployeeListItem(e)).ToList();
 
                 return Employees;
@@ -162,7 +163,7 @@ namespace Paylocity.Interview.Logic.Core
 
         #endregion Data Fetching
 
-        #region Create/Update
+        #region Create/Update/Delete
 
         /// <summary>
         /// Creates a new employee with an associated address and dependents
@@ -186,7 +187,7 @@ namespace Paylocity.Interview.Logic.Core
                 NHSession.Save(Address);
 
                 // Create employee
-                DB.Employee Employee = new DB.Employee(EmployeeGuid, pEmployee.FirstName, pEmployee.LastName, pEmployee.Email, pEmployee.PhoneNumber, Address.Guid, DateTime.Now);
+                DB.Employee Employee = new DB.Employee(EmployeeGuid, pEmployee.FirstName, pEmployee.LastName, pEmployee.Email, pEmployee.PhoneNumber, Address.Guid, DateTime.Now, true);
                 NHSession.Save(Employee);
 
                 // Create dependents
@@ -236,7 +237,7 @@ namespace Paylocity.Interview.Logic.Core
                 DBEmployee.PhoneNumber = pEmployee.PhoneNumber;
 
                 // Update Address (if changed)
-                bool IsAddressedChanged = (Employee.Address == null);
+                bool IsAddressedChanged = (Employee.Address == null && pEmployee.Address != null);
                 IsAddressedChanged = IsAddressedChanged || (Employee.Address.AddressLine1.ToLower() != pEmployee.Address.AddressLine1.ToLower());
                 IsAddressedChanged = IsAddressedChanged || (Employee.Address.AddressLine2.ToLower() != pEmployee.Address.AddressLine2.ToLower());
                 IsAddressedChanged = IsAddressedChanged || (Employee.Address.City.ToLower() != pEmployee.Address.City.ToLower());
@@ -285,6 +286,37 @@ namespace Paylocity.Interview.Logic.Core
         }
 
         /// <summary>
+        /// Marks an employee as Inactive
+        /// </summary>
+        /// <param name="pEmployeeGuid"></param>
+        public void DeleteEmployee(Guid pEmployeeGuid)
+        {
+            try
+            {
+                // TODO: Add security so only authorized users can delete employees
+
+                var DBEmployee = (from e in NHSession.Query<DB.Employee>()
+                                  where e.Guid == pEmployeeGuid
+                                  select e).FirstOrDefault();
+
+                // Ensure employee exists
+                if (DBEmployee == null)
+                {
+                    throw new Exceptions.Core.EmployeeDoesNotExistException();
+                }
+
+                DBEmployee.IsActive = false;
+                NHSession.Update(DBEmployee);
+                NHSession.Flush();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Validates user input for an employee
         /// Will throw an exception if there is invalid data
         /// </summary>
@@ -305,7 +337,7 @@ namespace Paylocity.Interview.Logic.Core
                 throw new Exceptions.Core.InvalidFormField("Last name");
 
             pEmployee.PhoneNumber = Common.Formatters.FormatPhoneNumberForDb(pEmployee.PhoneNumber);
-            if (string.IsNullOrWhiteSpace(pEmployee.PhoneNumber) || pEmployee.PhoneNumber.Length > Interview.Config.DBConfig.EmployeePhoneNumberMaxLength)
+            if (string.IsNullOrWhiteSpace(pEmployee.PhoneNumber) || pEmployee.PhoneNumber.Length > Constants.DBConfig.EmployeePhoneNumberMaxLength)
                 throw new Exceptions.Core.InvalidFormField("Phone number");
 
             if (!Common.Validators.IsValidEmailAddress(pEmployee.Email))
@@ -318,16 +350,16 @@ namespace Paylocity.Interview.Logic.Core
             if (string.IsNullOrWhiteSpace(pEmployee.Address.AddressLine1))
                 throw new Exceptions.Core.InvalidFormField("Address 1");
 
-            if (string.IsNullOrWhiteSpace(pEmployee.Address.City) || pEmployee.Address.City.Length > Interview.Config.DBConfig.AddressCityMaxLength)
+            if (string.IsNullOrWhiteSpace(pEmployee.Address.City) || pEmployee.Address.City.Length > Constants.DBConfig.AddressCityMaxLength)
                 throw new Exceptions.Core.InvalidFormField("City");
 
-            if (string.IsNullOrWhiteSpace(pEmployee.Address.State) || pEmployee.Address.State.Length > Interview.Config.DBConfig.AddressStateMaxLength)
+            if (string.IsNullOrWhiteSpace(pEmployee.Address.State) || pEmployee.Address.State.Length > Constants.DBConfig.AddressStateMaxLength)
                 throw new Exceptions.Core.InvalidFormField("State");
 
-            if (string.IsNullOrWhiteSpace(pEmployee.Address.PostalCode) || pEmployee.Address.PostalCode.Length > Interview.Config.DBConfig.AddressPostalCodeMaxLength)
+            if (string.IsNullOrWhiteSpace(pEmployee.Address.PostalCode) || pEmployee.Address.PostalCode.Length > Constants.DBConfig.AddressPostalCodeMaxLength)
                 throw new Exceptions.Core.InvalidFormField("Postal code");
 
-            if (string.IsNullOrWhiteSpace(pEmployee.Address.CountryCode) || pEmployee.Address.CountryCode.Length > Interview.Config.DBConfig.AddressCountryCodeMaxLength)
+            if (string.IsNullOrWhiteSpace(pEmployee.Address.CountryCode) || pEmployee.Address.CountryCode.Length > Constants.DBConfig.AddressCountryCodeMaxLength)
                 throw new Exceptions.Core.InvalidFormField("Country");
 
             // Validate dependents
@@ -344,6 +376,6 @@ namespace Paylocity.Interview.Logic.Core
             }
         }
 
-        #endregion Create/Update
+        #endregion Create/Update/Delete
     }
 }

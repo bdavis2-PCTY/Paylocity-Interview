@@ -16,6 +16,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
         public string PhoneNumber { get; set; }
         public Address Address { get; set; }
         public List<DTO.Dependent> Dependents { get; set; }  
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Annual salary before deductions
@@ -30,12 +31,13 @@ namespace Paylocity.Interview.Logic.Core.DTO
         /// </summary>
         public double GrossPaycheckAmount
         {
+            // TODO: Move to a database value
             get => 2000d;
         }
 
         public Employee() { }
 
-        public Employee(Guid pGuid, string pFirstName, string pLastName, string pEmail, string pPhoneNumber, Address pAddress)
+        public Employee(Guid pGuid, string pFirstName, string pLastName, string pEmail, string pPhoneNumber, Address pAddress, bool pIsActive)
         {
             Guid = pGuid;
             FirstName = pFirstName;
@@ -43,6 +45,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
             Email = pEmail;
             PhoneNumber = pPhoneNumber;
             Address = pAddress;
+            IsActive = pIsActive;
         }
 
         internal Employee(DB.Employee pEmployee, DTO.Address pAddress, List<DTO.Dependent> pDepdendents)
@@ -60,6 +63,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
             PhoneNumber = pEmployee.PhoneNumber;
             Address = pAddress;
             Dependents = pDepdendents;
+            IsActive = pEmployee.IsActive;
         }
     }
 }

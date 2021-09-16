@@ -233,6 +233,7 @@
     <None Include="packages.config" />
     <Content Include="Modals\EditEmployee.cshtml" />
     <Content Include="Views\Home\_BenefitSummary.cshtml" />
+    <None Include="Properties\PublishProfiles\Release.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paylocity.Interview.Config\Paylocity.Interview.Config.csproj">

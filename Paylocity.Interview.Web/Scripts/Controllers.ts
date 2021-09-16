@@ -1,11 +1,16 @@
 ﻿/**
  * Interacts with the Home controller
  */
-namespace Paylocity.Interview.Web.Controllers {
+namespace Paylocity.Interview.Web.Scripts.Controllers {
+
+    /**
+     * Provides base functionality for interacting with controllers
+     */
     abstract class BaseController {
         private readonly _baseUrl: string;
 
         public constructor(pControllerName: string) {
+            // Build the base route/URL of the controller
             this._baseUrl = `${Scripts.Helpers.Utility.getSiteUrl()}/${pControllerName}`;
         }
 
@@ -15,8 +20,10 @@ namespace Paylocity.Interview.Web.Controllers {
          * @param pParams
          */
         public postHtmlAsync(pViewName: string, pParams?: object): JQueryPromise<string> {
+            const url = `${this._baseUrl}/${pViewName}`;
+
             const ajaxSettings: JQueryAjaxSettings = {
-                url: `${this._baseUrl}/${pViewName}`,
+                url: url,
                 type: "POST",
             };
 
@@ -26,12 +33,12 @@ namespace Paylocity.Interview.Web.Controllers {
             }
 
             return $.ajax(ajaxSettings)
-                .fail(reply => console.error("AJAX call failed!", reply));
+                .fail(reply => console.error("AJAX call failed for loading a controller! URL:" + url, reply));
         }
     }
 
     /**
-     * Home Controller Mappings
+     * HomeController Mappings
      * BaseURL: [URL]/Home/
      */
     class HomeController extends BaseController {

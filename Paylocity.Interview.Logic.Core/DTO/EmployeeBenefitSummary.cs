@@ -11,17 +11,17 @@ namespace Paylocity.Interview.Logic.Core.DTO
         /// <summary>
         /// Amount of deductions annually after discounts
         /// </summary>
-        public double NetAnnualDeductions
+        public double AnnualNetDeductions
         {
-            get => Deductions.Sum(x => x.NetAnnualCost);
+            get => Deductions.Sum(x => x.AnnualNetCost);
         }
 
         /// <summary>
         /// Employee's net annual salary (after deductions)
         /// </summary>
-        public double NetAnnualSalary
+        public double AnnualNetSalary
         {
-            get => Employee.GrossAnnualSalary - Deductions.Sum(x => x.NetAnnualCost);
+            get => Employee.GrossAnnualSalary - Deductions.Sum(x => x.AnnualNetCost);
         }
 
         /// <summary>
@@ -29,15 +29,15 @@ namespace Paylocity.Interview.Logic.Core.DTO
         /// </summary>
         public double NetPaycheckDeductions
         {
-            get => (NetAnnualDeductions / 26d);     // 26 paycheck/year
+            get => (AnnualNetDeductions / 26d);     // 26 paycheck/year
         }
 
         /// <summary>
         /// Net paycheck (after deductions)
         /// </summary>
-        public double NetPaycheck
+        public double PaycheckNet
         {
-            get => (NetAnnualSalary / 26d);         // 26 paycheck/year
+            get => (AnnualNetSalary / 26d);         // 26 paycheck/year
         }
 
         public EmployeeBenefitSummary(DTO.Employee pEmployee, List<DTO.BenefitDeduction> pCharges)

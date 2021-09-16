@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Common\Validators.cs" />
     <Compile Include="Common\Formatters.cs" />
+    <Compile Include="Constants\DBConfig.cs" />
     <Compile Include="DB\Address.cs" />
     <Compile Include="DB\Dependent.cs" />
     <Compile Include="DB\Employee.cs" />

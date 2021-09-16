@@ -10,6 +10,9 @@ namespace Paylocity.Interview.Logic.Core
     {
         private log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        /// <summary>
+        /// Access to database connection
+        /// </summary>
         protected ISession NHSession { get; private set; }
 
         public BaseAPI(ISession pNHSession)
@@ -19,7 +22,7 @@ namespace Paylocity.Interview.Logic.Core
 
         protected void ErrorHandler(Exception ex)
         {
-            // TODO: Implement error handling
+            // TODO: Implement better error handling
             Log.Error(ex);
         }
     }

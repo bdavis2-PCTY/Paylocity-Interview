@@ -8,7 +8,7 @@ namespace Paylocity.Interview.Logic.Core.DTO
         /// <summary>
         /// Cost of the deduction per year before discounts
         /// </summary>
-        public double GrossAnnualCost { get; private set; }
+        public double AnnualGrossCost { get; private set; }
 
         /// <summary>
         /// Reason for the deduction
@@ -23,14 +23,14 @@ namespace Paylocity.Interview.Logic.Core.DTO
         /// <summary>
         /// Original annual cost of the deduction minus the discounts
         /// </summary>
-        public double NetAnnualCost
+        public double AnnualNetCost
         {
-            get => GrossAnnualCost * (1 - Discounts.Sum(x => x.DiscountPercentage));
+            get => AnnualGrossCost * (1 - Discounts.Sum(x => x.DiscountPercentage));
         }
 
-        public BenefitDeduction(double pBaseCost, string pChargeReason, List<BenefitDeductionDiscount> pDiscounts)
+        public BenefitDeduction(double pAnnualGrossCost, string pChargeReason, List<BenefitDeductionDiscount> pDiscounts)
         {
-            GrossAnnualCost = pBaseCost;
+            AnnualGrossCost = pAnnualGrossCost;
             Reason = pChargeReason;
             Discounts = pDiscounts;
         }

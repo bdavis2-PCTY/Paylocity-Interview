@@ -43,6 +43,14 @@
 
             return this.postAsync('CreateEmployee', params);
         }
+
+        public deleteEmployeeAsync(pEmployeeGuid: string): JQueryPromise<string> {
+            const params = {
+                pEmployeeGuid: pEmployeeGuid
+            };
+
+            return this.postAsync('DeleteEmployee', params);
+        }
     }
 
     export const Employee = new EmployeeWebservice();

@@ -23,6 +23,7 @@
         padding: 1em;
         text-align: center;
     }
+
     // Text modifiers
     .ui.text {
         &.bold {
@@ -33,6 +34,7 @@
             color: #e24c4c;
         }
     }
+
     // Semantic UI fix -
     // Reposition modals to be centered
     .dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
@@ -55,6 +57,15 @@
 
     .dimmed.dimmable > .ui.modals.dimmer.visible {
         display: flex !important;
+    }
+
+    // Add compact rows to SemanticUI grids
+    .ui.grid {
+        .row {
+            &.compact {
+                padding: 5px 0;
+            }
+        }
     }
 }
 

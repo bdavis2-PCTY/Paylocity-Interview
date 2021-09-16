@@ -52,9 +52,6 @@
                         <input type="text" name="city" placeholder="City">
                     </div>
                     <div class="required field">
-                        <input type="email" name="postalCode" placeholder="Postal Code">
-                    </div>
-                    <div class="required field">
                         <div class="ui fluid search selection dropdown">
                             <input type="hidden" name="state">
                             <i class="dropdown icon"></i>
@@ -62,6 +59,9 @@
                             <div class="menu">
                             </div>
                         </div>
+                    </div>
+                    <div class="required field">
+                        <input type="text" name="postalCode" placeholder="Postal Code">
                     </div>
                     <div class="required field">
                         <div class="ui fluid search selection dropdown">
@@ -95,6 +95,13 @@
     </div>
 
     <div class="actions">
+
+        <div id="uiDeleteEmployeeBtn" class="ui left labeled left floated icon button red">
+            <i class="remove icon"></i>
+            Delete
+        </div>
+
         @Html.ModalSaveCloseButtons()
     </div>
 </div>
+ 

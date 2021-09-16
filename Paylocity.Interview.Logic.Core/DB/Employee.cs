@@ -15,12 +15,13 @@ namespace Paylocity.Interview.Logic.Core.DB
         public virtual string PhoneNumber { get; protected internal set; }
         public virtual Guid PrimaryAddressGuid { get; protected internal set; }
         public virtual DateTime CreatedDateTime { get; protected internal set; }
+        public virtual bool IsActive { get; protected internal set; }
 
         protected Employee()
         {
         }
 
-        public Employee(Guid pGuid, string pFirstName, string pLastName, string pEmail, string pPhoneNumber, Guid pPrimaryAddressGuid, DateTime pCreatedDateTime)
+        public Employee(Guid pGuid, string pFirstName, string pLastName, string pEmail, string pPhoneNumber, Guid pPrimaryAddressGuid, DateTime pCreatedDateTime, bool pIsActive)
         {
             Guid = pGuid;
             FirstName = pFirstName;
@@ -29,6 +30,7 @@ namespace Paylocity.Interview.Logic.Core.DB
             PhoneNumber = pPhoneNumber;
             PrimaryAddressGuid = pPrimaryAddressGuid;
             CreatedDateTime = pCreatedDateTime;
+            IsActive = pIsActive;
         }
     }
 }

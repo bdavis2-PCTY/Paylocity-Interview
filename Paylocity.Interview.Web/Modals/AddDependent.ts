@@ -1,5 +1,9 @@
 ﻿namespace Paylocity.Interview.Web.Modals {
 
+    /**
+     * Represents the SemanticUI form values for the dependent form
+     * Helps to enforce type-safety
+     */
     export interface IDependentFormValues {
         firstName: string;
         lastName: string;
@@ -51,8 +55,7 @@
             this._onSaveCallback = pOnSaveCallback;
 
             return this.loadModalAsync()
-                .then(() => this.showModal())
-                .fail(console.log);
+                .then(() => this.showModal());
         }
 
         /**
@@ -70,21 +73,22 @@
          * Called when the form is submitted
          * Validates the form and runs the callback
          */
-        private onFormSubmit(): boolean {
+        private onFormSubmit(): void {
 
+            // Ensure the form is valid
             if (!this.$form.form('is valid')) {
-                return false;
+                return;
             }
 
-            this.hideModal();
 
             // Run callback
             if (this._onSaveCallback) {
                 const formValues: IDependentFormValues = this.$form.form('get values');
                 this._onSaveCallback(formValues);
             }
-             
-            return false;
+
+            // Manually hide modal
+            this.hideModal();
         }
     }
 

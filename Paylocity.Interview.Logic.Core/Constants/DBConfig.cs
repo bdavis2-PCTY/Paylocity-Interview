@@ -1,9 +1,9 @@
-﻿namespace Paylocity.Interview.Config
+﻿namespace Paylocity.Interview.Logic.Core.Constants
 {
     /// <summary>
-    /// Allows access to application-level configuration values
+    /// DB configuration values for the Core assembly
     /// </summary>
-    public static class DBConfig
+    internal static class DBConfig
     {
         #region Core.Employee
 

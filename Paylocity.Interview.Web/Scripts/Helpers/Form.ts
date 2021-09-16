@@ -1,4 +1,8 @@
 ﻿namespace Paylocity.Interview.Web.Scripts.Helpers {
+
+    /**
+     * Basic functions for helping with SemanticUI forms
+     */
     export class Form {
         private static _states: DropdownItem[];
         private static _countries: DropdownItem[];
@@ -11,6 +15,7 @@
             const $menu = pDropdown.find('.menu');
             let dropdownMenuHtml = '';
 
+            // Build HTML of the states dropdown
             for (const entry of this.getStates()) {
                 dropdownMenuHtml += `<div class="item" data-value="${entry.value}">${entry.name}</div>`;
             }
@@ -27,6 +32,7 @@
             const $menu = pDropdown.find('.menu');
             let dropdownMenuHtml = '';
 
+            // Build HTML of country dropdown
             for (const entry of this.getCountries()) {
                 dropdownMenuHtml += `<div class="item" data-value="${entry.value}"><i class="${entry.value} flag"></i>${entry.name}</div>`;
             }
@@ -39,6 +45,7 @@
          * Returns an array of all the supported countries with their 2-code ISO value
          */
         private static getCountries(): DropdownItem[] {
+            // Build the _countries array if it has not been built yet
             if (!this._countries) {
                 this._countries = [];
                 this._countries.push(new DropdownItem("af", "Afghanistan"));
@@ -351,6 +358,10 @@
         }
     }
 
+    /**
+     * Represents an item in a dropdown
+     * Consumed by the Form Helper for populating dropdowns
+     */
     class DropdownItem {
         public readonly value: string;
         public readonly name: string;

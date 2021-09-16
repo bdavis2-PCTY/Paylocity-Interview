@@ -12,6 +12,7 @@ namespace Paylocity.Interview.Web.Interfaces.Core {
         PhoneNumber: string;
         Address: IAddress;
         Dependents: IDependent[];
+        IsActive: boolean;
     }
 
     // Paylocity.Interview.Logic.Core.DTO.EmployeeListItem

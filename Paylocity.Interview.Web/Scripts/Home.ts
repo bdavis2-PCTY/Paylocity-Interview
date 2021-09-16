@@ -1,4 +1,4 @@
-﻿namespace Paylocity.Interview.Web.Scripts {
+﻿namespace Paylocity.Interview.Web.Scripts.Pages {
     /**
      * Manager for the Home screen
      */
@@ -43,16 +43,16 @@
             });
 
             // Wire Add Employee button
-            $("#uiAddEmployeeBtn").click(() => Modals.EditEmployee.show(null, () => this.reloadEmployees()));
+            $("#uiAddEmployeeBtn").click(() => Modals.EditEmployee.show(null, () => this.reloadEmployeesAsync()));
 
             // Initial load of employees list
-            this.reloadEmployees();
+            this.reloadEmployeesAsync();
         }
 
         /**
          * Reloads the employees in the employee list from the API
          */
-        private reloadEmployees(): JQueryPromise<void> {
+        private reloadEmployeesAsync(): JQueryPromise<void> {
             return Webservice.Employee.getEmployeeListAsync().then(employees => this.$uiEmployeeList.clear().rows.add(employees).draw());
         }
 
@@ -64,7 +64,7 @@
         private formatViewColumn(td: HTMLTableCellElement, rowData: Interfaces.Core.IEmployeeListItem) {
             // Add View Employee button and write to EditEmployee modal
             const $viewBtn = $("<div class='ui small compact icon button'><i class='link search plus icon'></i></div>")
-                .click(() => Paylocity.Interview.Web.Modals.EditEmployee.show(rowData.Guid, () => this.reloadEmployees()));
+                .click(() => Paylocity.Interview.Web.Modals.EditEmployee.show(rowData.Guid, () => this.reloadEmployeesAsync()));
 
             $(td).html('').append($viewBtn);
         }
