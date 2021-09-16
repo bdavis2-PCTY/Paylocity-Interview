@@ -166,7 +166,7 @@ namespace Paylocity.Interview.Logic.Core
 
         #endregion Data Fetching
 
-        #region Create/Update/Delete
+        #region Create/Update
 
         /// <summary>
         /// Creates a new employee with an associated address and dependents
@@ -289,14 +289,14 @@ namespace Paylocity.Interview.Logic.Core
         }
 
         /// <summary>
-        /// Marks an employee as Inactive
+        /// Toggles whether or not an employee is active
         /// </summary>
         /// <param name="pEmployeeGuid"></param>
-        public void DeleteEmployee(Guid pEmployeeGuid)
+        public void SetEmployeeActive(Guid pEmployeeGuid, bool pIsActive)
         {
             try
             {
-                // TODO: Add security so only authorized users can delete employees
+                // TODO: Add security so only authorized users can set employees activate
 
                 var DBEmployee = (from e in NHSession.Query<DB.Employee>()
                                   where e.Guid == pEmployeeGuid
@@ -308,9 +308,13 @@ namespace Paylocity.Interview.Logic.Core
                     throw new Exceptions.Core.EmployeeDoesNotExistException();
                 }
 
-                DBEmployee.IsActive = false;
-                NHSession.Update(DBEmployee);
-                NHSession.Flush();
+                // Update IsActive
+                if (DBEmployee.IsActive != pIsActive)
+                {
+                    DBEmployee.IsActive = pIsActive;
+                    NHSession.Update(DBEmployee);
+                    NHSession.Flush();
+                }
             }
             catch (Exception ex)
             {
@@ -379,6 +383,6 @@ namespace Paylocity.Interview.Logic.Core
             }
         }
 
-        #endregion Create/Update/Delete
+        #endregion Create/Update
     }
 }

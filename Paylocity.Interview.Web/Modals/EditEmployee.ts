@@ -27,7 +27,8 @@
         private _benefitManager: BenefitsManager;
         private _benefitRefreshTimout: number;
 
-        private $uiDeleteEmployeeBtn: $;
+        private $uiDeactivateEmployeeBtn: $;
+        private $uiActiveEmployeeBtn: $;
 
         private $form: $;
 
@@ -80,23 +81,9 @@
                 }
             });
 
-            // Delete employee
-            this.$uiDeleteEmployeeBtn = $("#uiDeleteEmployeeBtn", this.$modal).click(() => {
-                // Prompt confirmation
-                const confirmed = confirm("Are you sure you want to delete this employee?");
-                if (!confirmed) {
-                    return;
-                }
-
-                Webservice.Employee.deleteEmployeeAsync(this._employeeGuid).then(() => {
-                    this.hideModal();
-
-                    // Run save callback
-                    if (this._onSaveCallback) {
-                        this._onSaveCallback();
-                    }
-                });
-            });
+            // Activate/Deactivate employee
+            this.$uiDeactivateEmployeeBtn = $("#uiDeactivateEmployeeBtn", this.$modal).click(() => this.setEmployeeActiveAsync(false, 'Are you sure you want to deactivate this employee?'));
+            this.$uiActiveEmployeeBtn = $("#uiActivateEmployeeBtn", this.$modal).click(() => this.setEmployeeActiveAsync(true, 'Are you sure you want to reactivate this employee?'));
 
             // Load states/countries into address dropdowns
             Scripts.Helpers.Form.setDropdownStates($(this.$form.form('get field', 'state')).parent());
@@ -118,7 +105,8 @@
             return this.loadModalAsync()
                 .then(() => {
                     const isExistingEmployee = (this._employeeGuid && this._employeeGuid !== Scripts.Helpers.Utility.getEmptyGuid());
-                    this.$uiDeleteEmployeeBtn.toggle(isExistingEmployee);
+                    this.$uiDeactivateEmployeeBtn.toggle(false);
+                    this.$uiActiveEmployeeBtn.toggle(false);
 
                     // Load employee data if editing an existing user
                     if (isExistingEmployee) {
@@ -177,6 +165,11 @@
                 // Load form, dependents, and benefits summary
                 this.$form.form('set values', formValues);
                 this._dependentManager.setDependents(employee.Dependents);
+
+                // Update Active/Deactivate buttons
+                this.$uiActiveEmployeeBtn.toggle(!employee.IsActive);
+                this.$uiDeactivateEmployeeBtn.toggle(employee.IsActive);
+
                 return this._benefitManager.reload(employee);
             });
         }
@@ -216,7 +209,6 @@
          * Saves or updates the employee based if the form is valid
          */
         private saveEmployeeAsync(): JQueryPromise<void> {
-
             // Verify the form is valid
             if (!this.$form.form('is valid')) {
                 return $.Deferred<void>().rejectWith("Invalid form input");
@@ -235,6 +227,29 @@
             }
 
             return savePromise.then(() => {
+                this.hideModal();
+
+                // Run save callback
+                if (this._onSaveCallback) {
+                    this._onSaveCallback();
+                }
+            });
+        }
+
+        /**
+         * Sets whether or not an employee is activate
+         * @param pIsActive
+         * @param pConfirmPrompt
+         */
+        private setEmployeeActiveAsync(pIsActive: boolean, pConfirmPrompt: string): JQueryPromise<void> {
+            // Prompt confirmation
+            const confirmed = confirm(pConfirmPrompt);
+            if (!confirmed) {
+                return;
+            }
+
+            // Save changes & hide modal
+            return Webservice.Employee.setEmployeeActiveAsync(this._employeeGuid, pIsActive).then(() => {
                 this.hideModal();
 
                 // Run save callback

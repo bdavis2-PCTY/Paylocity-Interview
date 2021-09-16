@@ -48,12 +48,13 @@
             return this.postAsync('CreateEmployee', params);
         }
 
-        public deleteEmployeeAsync(pEmployeeGuid: string): JQueryPromise<string> {
+        public setEmployeeActiveAsync(pEmployeeGuid: string, pIsActive: boolean): JQueryPromise<string> {
             const params = {
-                pEmployeeGuid: pEmployeeGuid
+                pEmployeeGuid: pEmployeeGuid,
+                pIsActive: pIsActive
             };
 
-            return this.postAsync('DeleteEmployee', params);
+            return this.postAsync('SetEmployeeActive', params);
         }
     }
 

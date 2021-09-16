@@ -50,7 +50,7 @@
                         orderable: false,
                         render: (isActive: boolean) => {
                             if (!isActive) {
-                                return '<span class="ui right floated red label">Inactive</span>';
+                                return '<span class="ui right floated red small label">Inactive</span>';
                             }
 
                             return "";

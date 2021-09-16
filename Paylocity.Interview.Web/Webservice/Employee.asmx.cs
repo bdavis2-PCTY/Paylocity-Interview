@@ -59,11 +59,11 @@ namespace Paylocity.Interview.Web.Webservice
         }
 
         [WebMethod(true)]
-        public void DeleteEmployee(Guid pEmployeeGuid)
+        public void SetEmployeeActive(Guid pEmployeeGuid, bool pIsActive)
         {
             using (NHibernateFactory NHFactory = new NHibernateFactory())
             {
-                new EmployeeAPI(NHFactory.Session).DeleteEmployee(pEmployeeGuid);
+                new EmployeeAPI(NHFactory.Session).SetEmployeeActive(pEmployeeGuid, pIsActive);
             }
         }
     }
