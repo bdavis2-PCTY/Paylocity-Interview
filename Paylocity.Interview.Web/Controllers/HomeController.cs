@@ -2,7 +2,7 @@
 using Paylocity.Interview.ORM;
 using System.Web.Mvc;
 
-namespace Paylocity.Interview.Controllers
+namespace Paylocity.Interview.Web.Controllers
 {
     public class HomeController : Controller
     {

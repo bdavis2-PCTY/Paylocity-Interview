@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace Paylocity.Interview
+namespace Paylocity.Interview.Web
 {
     public static class WebApiConfig
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Paylocity.Interview.Controllers
+namespace Paylocity.Interview.Web.Controllers
 {
     /// <summary>
     /// Controller for serving up modal HTML for lazy-loaded modals
