@@ -49,6 +49,7 @@
                         searchable: false,
                         orderable: false,
                         render: (isActive: boolean) => {
+                            // Add Inactivate label for inactive employees
                             if (!isActive) {
                                 return '<span class="ui right floated red small label">Inactive</span>';
                             }
@@ -65,7 +66,9 @@
 
                 initComplete: () => {
                     $('.row .eight.wide.column', this.$uiEmployeeList).first().html('').append(this.$uiToggleInactiveEmployeesChk);
-                }
+                },
+
+                order: [[1, 'asc'], [2, 'asc'], [3, 'asc']]
             });
 
             // Wire Add Employee button
