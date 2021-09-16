@@ -26,6 +26,7 @@
         private _dependentManager: DependentManager;
         private _benefitManager: BenefitsManager;
         private _benefitRefreshTimout: number;
+        private _isSaving: boolean;
 
         private $uiDeactivateEmployeeBtn: $;
         private $uiActiveEmployeeBtn: $;
@@ -209,12 +210,19 @@
          * Saves or updates the employee based if the form is valid
          */
         private saveEmployeeAsync(): JQueryPromise<void> {
+
+            // Prevent spamming the save button
+            if (this._isSaving) {
+                return;
+            }
+
             // Verify the form is valid
             if (!this.$form.form('is valid')) {
                 return $.Deferred<void>().rejectWith("Invalid form input");
             }
 
             const employee = this.getEmployee();
+            this._isSaving = true;
 
             // Update or save the employee in the DB
             let savePromise: JQueryPromise<any> = null;
@@ -233,7 +241,8 @@
                 if (this._onSaveCallback) {
                     this._onSaveCallback();
                 }
-            });
+            })
+                .always(() => this._isSaving = false);
         }
 
         /**
