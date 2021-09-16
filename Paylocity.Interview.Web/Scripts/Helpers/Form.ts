@@ -38,7 +38,7 @@
             }
 
             $menu.html(dropdownMenuHtml);
-            return pDropdown.dropdown();
+            return pDropdown.dropdown().dropdown("set value", "us");
         }
 
         /**
